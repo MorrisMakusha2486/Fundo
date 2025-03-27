@@ -1,0 +1,192 @@
+<div class="container mx-auto p-6">
+    <!-- New wrapper div with rounded border and background -->
+    <div class="rounded-xl border border-gray-400 bg-gray-400 backdrop-blur-sm shadow-sm p-10 mb-6">
+      <!-- Header Section -->
+      <div class="flex justify-between items-center mb-6">
+        <h1 class="text-2xl font-bold text-gray-900">Admin Dashboard</h1>
+        <div class="flex space-x-3">
+          <button class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors flex items-center">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+            </svg>
+            System Settings
+          </button>
+          <button class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors flex items-center">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+            </svg>
+            Generate Reports
+          </button>
+        </div>
+      </div>
+  
+      <!-- Stats Cards Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Total Students Card -->
+        <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+          <h3 class="text-sm font-medium text-gray-500">Total Students</h3>
+          <p class="text-2xl font-bold text-blue-600">{{schoolStats.totalStudents}}</p>
+        </div>
+  
+        <!-- Active Teachers Card -->
+        <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+          <h3 class="text-sm font-medium text-gray-500">Total Teachers</h3>
+          <p class="text-2xl font-bold text-green-600">{{schoolStats.totalTeachers}}</p>
+        </div>
+  
+        <!-- Total Courses Card -->
+        <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+          <h3 class="text-sm font-medium text-gray-500">Total Courses</h3>
+          <p class="text-2xl font-bold text-purple-600">{{schoolStats.totalCourses}}</p>
+        </div>
+  
+        <!-- Active Parents Card -->
+        <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+          <h3 class="text-sm font-medium text-gray-500">Active Parents</h3>
+          <p class="text-2xl font-bold text-indigo-600">{{schoolStats.activeParents}}</p>
+        </div>
+      </div>
+    </div> 
+  
+    <!-- Rest of the dashboard content -->
+    <!-- Performance Metrics -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+      <div *ngFor="let metric of [
+        { name: 'Attendance', data: performanceMetrics.attendance, color: 'blue' },
+        { name: 'Grades', data: performanceMetrics.grades, color: 'green' },
+        { name: 'Parent Engagement', data: performanceMetrics.parentEngagement, color: 'purple' },
+        { name: 'Teacher Performance', data: performanceMetrics.teacherPerformance, color: 'yellow' }
+      ]" class="bg-white rounded-lg shadow-lg p-6">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-sm font-medium text-gray-500">{{metric.name}}</h3>
+          <span class="text-xs px-2 py-1 rounded-full" [class]="
+            metric.data.trend === 'up' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+          ">
+            {{metric.data.trend === 'up' ? '↑' : '↓'}} 
+            {{metric.data.current - metric.data.previous}}%
+          </span>
+        </div>
+        <p class="text-2xl font-bold" [class]="'text-' + metric.color + '-600'">
+          {{metric.data.current}}%
+        </p>
+        <div class="mt-2">
+          <div class="w-full bg-gray-200 rounded-full h-2.5">
+            <div class="h-2.5 rounded-full" 
+                 [class]="'bg-' + metric.color + '-600'"
+                 [style.width]="metric.data.current + '%'"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- New Layout Grid -->
+    <div class="grid grid-cols-4 gap-6 mt-6">
+      <!-- Left Column (75% width) -->
+      <div class="col-span-3 space-y-6">
+        <!-- Upcoming Events -->
+        <div class="bg-white rounded-lg shadow-lg h-[calc(50vh-2rem)]">
+          <div class=" text-black  p-4 rounded-t-lg shadow-xl">
+            <h2 class=" font-bold">Upcoming Events</h2>
+          </div>
+          <div class="h-[calc(50vh-8rem)] overflow-y-auto scrollbar-hide">
+            <div class="divide-y divide-gray-200">
+              <div *ngFor="let event of upcomingEvents" 
+                   class="p-4 hover:bg-gray-50 transition-colors">
+                <div class="flex justify-between items-start mb-2">
+                  <h3 class="font-semibold text-gray-800">{{event.title}}</h3>
+                  <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
+                    {{event.attendees}} Attendees
+                  </span>
+                </div>
+                <p class="text-sm text-gray-600">{{event.location}}</p>
+                <p class="text-xs text-gray-500 mt-2">
+                  {{event.date}} at {{event.time}}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Recent Activities -->
+        <div class="bg-white rounded-lg shadow-lg h-[calc(50vh-2rem)]">
+          <div class="p-4 rounded-t-lg shadow-xl">
+            <h2 class="font-bold">Recent Activities</h2>
+          </div>
+          <div class="h-[calc(50vh-8rem)] overflow-y-auto scrollbar-hide">
+            <div class="divide-y divide-gray-200">
+              <div *ngFor="let activity of recentActivities" 
+                   class="flex items-center p-4 hover:bg-gray-50 transition-colors">
+                <span class="px-2 py-1 rounded-full text-xs mr-3" [class]="
+                  activity.type === 'Enrollment' ? 'bg-blue-100 text-blue-800' :
+                  activity.type === 'Grade' ? 'bg-green-100 text-green-800' :
+                  'bg-purple-100 text-purple-800'
+                ">{{activity.type}}</span>
+                <div class="flex-grow">
+                  <p class="text-sm text-gray-800">{{activity.description}}</p>
+                  <p class="text-xs text-gray-500">{{activity.timestamp}}</p>
+                </div>
+                <span class="text-xs px-2 py-1 rounded-full" [class]="
+                  activity.status === 'Completed' ? 'bg-green-100 text-green-800' :
+                  'bg-yellow-100 text-yellow-800'
+                ">{{activity.status}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Right Column (25% width) -->
+      <div class="col-span-1">
+        <div class="bg-white rounded-lg shadow-lg h-[calc(100vh-2rem)]">
+          <div class=" p-4 rounded-t-lg flex justify-between items-center shadow-xl">
+            <h2 class="font-bold">Activity Log</h2>
+            <button class="p-1 hover:bg-gray-700 rounded">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/>
+              </svg>
+            </button>
+          </div>
+          <div class="h-[calc(100vh-18rem)] overflow-y-auto scrollbar-hide">
+            <div class="divide-y divide-gray-200">
+              <div *ngFor="let log of activityLogs" 
+                   class="p-3 hover:bg-gray-50 transition-colors">
+                <div class="flex items-center">
+                  <span class="w-2 h-2 rounded-full mr-2" 
+                        [class]="log.type === 'info' ? 'bg-blue-400' : 'bg-yellow-400'">
+                  </span>
+                  <p class="text-sm text-gray-800">{{log.message}}</p>
+                </div>
+                <p class="text-xs text-gray-500 mt-1 ml-4">{{log.timestamp}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- System Alerts -->
+    <div class="mt-6">
+      <div class="bg-white rounded-lg shadow-lg p-6">
+        <h2 class="text-xl font-bold text-gray-800 mb-4">System Alerts</h2>
+        <div class="space-y-4">
+          <div *ngFor="let alert of alerts" 
+               class="flex items-center p-3 rounded-lg"
+               [class]="alert.type === 'warning' ? 'bg-yellow-50' : 'bg-blue-50'">
+            <span class="text-2xl mr-3" [class]="
+              alert.type === 'warning' ? 'text-yellow-500' : 'text-blue-500'
+            ">
+              {{alert.type === 'warning' ? '⚠️' : 'ℹ️'}}
+            </span>
+            <div class="flex-grow">
+              <p class="text-sm" [class]="
+                alert.type === 'warning' ? 'text-yellow-800' : 'text-blue-800'
+              ">{{alert.message}}</p>
+              <p class="text-xs text-gray-500">{{alert.timestamp}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

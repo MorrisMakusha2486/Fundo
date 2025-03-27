@@ -1,0 +1,297 @@
+<!-- Hero Section -->
+<div class="relative min-h-screen bg-cover bg-no-repeat" 
+     style="background-image: linear-gradient(to right, rgba(2, 15, 37, 0.9), rgba(1, 10, 27, 0.7) 60%, transparent), 
+            url('assets/images/t3.jpg');">
+  <!-- Navigation -->
+  <nav class="fixed w-full z-50 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <div class="flex items-center">
+          <div class="flex-shrink-0">
+            <img class="h-8 w-auto" src="/src/" alt="Logo">
+          </div>
+        </div>
+        <div class="hidden md:flex items-center space-x-6">
+          <div class="flex items-baseline space-x-4">
+            <a href="#item1" class="text-white hover:text-blue-200 px-3 py-2 rounded-md text-sm font-medium">Features</a>
+            <a href="#item2" class="text-white hover:text-blue-200 px-3 py-2 rounded-md text-sm font-medium">About</a>
+            <a href="#item3" class="text-white hover:text-blue-200 px-3 py-2 rounded-md text-sm font-medium">Contact</a>
+          </div>
+          <button 
+            class="px-4 py-1.5 rounded-full text-blue-600 bg-white border border-blue-200 
+                   hover:bg-gray-100 hover:border-blue-400 transition-all duration-300 
+                   flex items-center space-x-2 group text-sm">
+            <div
+              (click)="navigateTo('dashboard')" 
+              class="font-semibold ">Login</div>
+            <svg xmlns="http://www.w3.org/2000/svg" 
+                 class="h-3.5 w-3.5 transform group-hover:translate-x-1 transition-transform duration-300" 
+                 fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Content -->
+  <div class="container mx-auto px-6 py-20 w-full">
+    <div class="flex flex-col justify-start  px-8 py-12">
+      <div class="md:w-3/4 space-y-8  ">
+        <h1 class="text-4xl md:text-6xl font-bold text-white leading-tight">
+          Transform Your <br> Learning Journey <br> with Fundo-Online
+        </h1>
+        <p class="mt-4 text-xl text-gray-200">
+          Unlock your potential with interactive courses, expert instructors, and a personalized learning experience
+        </p>
+        <div class="flex flex-row w-full space-x-3">
+         <a >
+           <button 
+             class="mt-8 bg-white text-blue-600 px-8 py-3 rounded-full font-bold hover:bg-gray-700 transition duration-300">
+             Get Started
+           </button>
+         </a>
+         <a href="#item2" class="btn btn-xs">
+           <button 
+           class="mt-8 bg-gray-700 text-white px-8 py-3 rounded-full font-bold hover:text-blue-600 hover:bg-gray-100 transition duration-300">
+           How it works
+          </button>
+        </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Features Section -->
+<div id="item1" class="relative bg-gray-50 py-16 px-8 overflow-hidden section-bg-pattern features-pattern">
+  <div class="relative z-10">
+    <div class="container mx-auto px-6">
+      <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Key Features</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <!-- Card 1 -->
+        <div 
+          class="bg-white p-8 rounded-lg shadow-xl hover:shadow-2xl transition-shadow duration-300 cursor-pointer relative min-h-[280px] w-full">
+          <div class="text-blue-600 text-4xl mb-6">
+            <i class="fas fa-graduation-cap"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-4">Interactive Learning</h3>
+          <p class="text-gray-600 mb-8">Engage with dynamic course content, quizzes, and hands-on projects</p>
+          <a href="#" class="absolute bottom-6 right-8 text-blue-600 hover:text-blue-800 text-sm font-semibold border border-blue-600 rounded-md px-3 py-1.5 flex items-center gap-2">
+            View More <i class="fas fa-plus text-xs"></i>
+          </a>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="bg-white p-8 rounded-lg shadow-xl hover:shadow-2xl transition-shadow duration-300 relative min-h-[280px] w-full">
+          <div class="text-blue-600 text-4xl mb-6">
+            <i class="fas fa-chalkboard-teacher"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-4">Expert Instructors</h3>
+          <p class="text-gray-600 mb-8">Learn from industry professionals and experienced educators</p>
+          <a href="#" class="absolute bottom-6 right-8 text-blue-600 hover:text-blue-800 text-sm font-semibold border border-blue-600 rounded-md px-3 py-1.5 flex items-center gap-2">
+            View More <i class="fas fa-plus text-xs"></i>
+          </a>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="bg-white p-8 rounded-lg shadow-xl hover:shadow-2xl transition-shadow duration-300 relative min-h-[280px] w-full">
+          <div class="text-blue-600 text-4xl mb-6">
+            <i class="fas fa-clock"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-4">Self-Paced Learning</h3>
+          <p class="text-gray-600 mb-8">Study at your own pace with flexible schedules and on-demand content</p>
+          <a href="#" class="absolute bottom-6 right-8 text-blue-600 hover:text-blue-800 text-sm font-semibold border border-blue-600 rounded-md px-3 py-1.5 flex items-center gap-2">
+            View More <i class="fas fa-plus text-xs"></i>
+          </a>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="bg-white p-8 rounded-lg shadow-xl hover:shadow-2xl transition-shadow duration-300 relative min-h-[280px] w-full">
+          <div class="text-blue-600 text-4xl mb-6">
+            <i class="fas fa-certificate"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-4">Certification</h3>
+          <p class="text-gray-600 mb-8">Earn recognized certificates upon successful course completion</p>
+          <a href="#" class="absolute bottom-6 right-8 text-blue-600 hover:text-blue-800 text-sm font-semibold border border-blue-600 rounded-md px-3 py-1.5 flex items-center gap-2">
+            View More <i class="fas fa-plus text-xs"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- How It Works section with similar treatment -->
+<div class="relative bg-gray-50 py-16 px-8 overflow-hidden">
+  <!-- Decorative Elements -->
+  <div class="absolute inset-0 pointer-events-none">
+    <!-- Curved lines -->
+    <div class="absolute top-0 left-0 w-[600px] h-[400px] opacity-10">
+      <svg viewBox="0 0 600 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0,200 Q300,0 600,200" stroke="#3B82F6" stroke-width="2"/>
+      </svg>
+    </div>
+    <!-- Abstract shape -->
+    <div class="absolute bottom-0 right-0 w-96 h-96 opacity-10">
+      <svg viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M200,0 L400,200 L200,400 L0,200 Z" stroke="#3B82F6" stroke-width="2"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Existing How It Works content wrapped for z-index -->
+  <div class="relative z-10">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold text-gray-900 mb-4">How It Works</h2>
+        <p class="text-gray-600 max-w-2xl mx-auto">Experience our innovative approach to online learning</p>
+      </div>
+
+      <div class="bg-white p-10 rounded-lg shadow-xl">
+        <div class="prose prose-lg max-w-none text-gray-700 leading-relaxed">
+          <p class="mb-6">
+            Begin your learning journey with <span class="text-blue-600 font-semibold">personalized course selection</span>. 
+            Our intelligent system helps you choose the perfect courses based on your goals, skill level, and interests, 
+            ensuring a tailored learning path just for you.
+          </p>
+
+          <p class="mb-6">
+            Engage with our <span class="text-blue-600 font-semibold">interactive learning platform</span> that combines 
+            video lectures, hands-on exercises, and real-world projects. Our multimedia approach caters to different 
+            learning styles, making complex concepts easier to grasp and retain.
+          </p>
+
+          <p class="mb-6">
+            Track your progress with our <span class="text-blue-600 font-semibold">comprehensive analytics dashboard</span>. 
+            Monitor your course completion, quiz scores, and skill development in real-time. Set learning goals and 
+            receive personalized recommendations to enhance your learning experience.
+          </p>
+
+          <p class="mb-6">
+            Connect through our <span class="text-blue-600 font-semibold">collaborative learning community</span>. 
+            Participate in discussion forums, group projects, and peer reviews. Learn from fellow students and receive 
+            guidance from expert instructors whenever you need help.
+          </p>
+
+          <p class="mb-6">
+            Complete your journey by earning <span class="text-blue-600 font-semibold">verified certificates</span> 
+            that showcase your newly acquired skills. Our certificates are recognized by industry leaders and can help 
+            advance your career or academic pursuits.
+          </p>
+        </div>
+
+        <div class="mt-8 text-center">
+          <button 
+            class="inline-flex items-center text-blue-600 font-semibold border border-blue-600 rounded-md px-6 py-3 hover:bg-blue-50 transition duration-300">
+            See It In Action <i class="fas fa-play-circle ml-2"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- About Us section with similar treatment -->
+<div id="item2" class="relative bg-gray-50 py-16 px-8 overflow-hidden">
+  <!-- Decorative Elements -->
+  <div class="absolute inset-0 pointer-events-none">
+    <!-- Wave pattern -->
+    <div class="absolute top-0 left-0 w-full h-[400px] opacity-10">
+      <svg viewBox="0 0 1200 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0,100 Q300,0 600,100 T1200,100" stroke="#3B82F6" stroke-width="2"/>
+        <path d="M0,200 Q300,100 600,200 T1200,200" stroke="#3B82F6" stroke-width="2"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Existing About Us content wrapped for z-index -->
+  <div class="relative z-10">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold text-gray-900 mb-4">About Fundo-Online</h2>
+        <p class="text-gray-600 max-w-2xl mx-auto">Empowering learners worldwide with innovative educational technology</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Vision -->
+        <div class="bg-white p-8 rounded-lg shadow-xl hover:shadow-2xl transition-shadow duration-300 flex flex-col h-full">
+          <div class="flex-grow">
+            <h3 class="text-xl font-bold mb-4">Our Vision</h3>
+            <p class="text-gray-600">To transform education by making quality learning accessible to everyone, anywhere in the world</p>
+          </div>
+          <div class="text-blue-600 text-4xl mt-6 flex justify-center">
+            <i class="fas fa-book-reader"></i>
+          </div>
+        </div>
+
+        <!-- Mission -->
+        <div class="bg-white p-8 rounded-lg shadow-xl hover:shadow-2xl transition-shadow duration-300 flex flex-col h-full">
+          <div class="flex-grow">
+            <h3 class="text-xl font-bold mb-4">Our Mission</h3>
+            <p class="text-gray-600">Providing engaging, interactive, and personalized learning experiences that inspire lifelong learning</p>
+          </div>
+          <div class="text-blue-600 text-4xl mt-6 flex justify-center">
+            <i class="fas fa-graduation-cap"></i>
+          </div>
+        </div>
+
+        <!-- Values -->
+        <div class="bg-white p-8 rounded-lg shadow-xl hover:shadow-2xl transition-shadow duration-300 flex flex-col h-full">
+          <div class="flex-grow">
+            <h3 class="text-xl font-bold mb-4">Our Values</h3>
+            <p class="text-gray-600">Excellence in education, innovation in learning, and dedication to student success</p>
+          </div>
+          <div class="text-blue-600 text-4xl mt-6 flex justify-center">
+            <i class="fas fa-star"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center mt-12">
+        <button 
+          class="inline-flex items-center text-blue-600 font-semibold border border-blue-600 rounded-md px-6 py-3 hover:bg-blue-50 transition duration-300">
+          Learn More About Us <i class="fas fa-arrow-right ml-2"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer id="item3" class="bg-gray-800 text-white py-10">
+  <div class="container mx-auto px-6">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div>
+        <h3 class="text-xl font-bold mb-4">Fundo LMS</h3>
+        <p class="text-gray-400">Transforming education through technology</p>
+      </div>
+      <div>
+        <h4 class="font-bold mb-4">Quick Links</h4>
+        <ul class="space-y-2">
+          <li><a href="#" class="text-gray-400 hover:text-white">Home</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white">Features</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white">About</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-bold mb-4">Contact</h4>
+        <ul class="space-y-2 text-gray-400">
+          <li>info&#64;fundolms.com</li>
+          <li>+1 234 567 890</li>
+          <li>123 Education Street</li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-bold mb-4">Follow Us</h4>
+        <div class="flex space-x-4">
+          <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook"></i></a>
+          <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-linkedin"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

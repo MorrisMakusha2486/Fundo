@@ -1,0 +1,40 @@
+<!-- Categories Section -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+  @for (category of categories; track category.id) {
+    <div class="relative group">
+      <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-300">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center space-x-4">
+            <span class="bg-blue-100 p-3 rounded-lg">
+              <i class="material-icons text-blue-600">{{ category.icon }}</i>
+            </span>
+            <div>
+              <h3 class="text-lg font-medium text-gray-900">{{ category.name }}</h3>
+              <p class="text-sm text-gray-500">{{ category.count }} courses</p>
+            </div>
+          </div>
+          <button class="text-gray-400 hover:text-gray-600">
+            <i class="material-icons">chevron_right</i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Tooltip -->
+      <div class="absolute z-10 w-64 p-4 bg-white rounded-lg shadow-lg border border-gray-100
+                  opacity-0 invisible group-hover:opacity-100 group-hover:visible 
+                  transition-all duration-300 transform translate-y-2 group-hover:translate-y-0
+                  left-0 top-full mt-2">
+        <h4 class="font-medium text-sm text-gray-900 mb-2">Popular Topics</h4>
+        <div class="space-y-2">
+          @for (subitem of category.subitems; track subitem.name) {
+            <a [routerLink]="subitem.link" 
+               class="flex items-center justify-between py-1 px-2 text-sm text-gray-600 hover:bg-gray-50 rounded">
+              <span>{{ subitem.name }}</span>
+              <span class="text-xs text-gray-400">{{ subitem.count }} courses</span>
+            </a>
+          }
+        </div>
+      </div>
+    </div>
+  }
+</div>

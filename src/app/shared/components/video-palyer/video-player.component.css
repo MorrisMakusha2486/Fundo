@@ -1,0 +1,23 @@
+.video-player-container {
+    aspect-ratio: 16/9;
+  }
+  
+  .video-controls {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .video-player-container:hover .video-controls {
+    opacity: 1;
+  }
+  
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    background: #3b82f6;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  

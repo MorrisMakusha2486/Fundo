@@ -1,0 +1,63 @@
+<div class="p-6 space-y-6">
+    <!-- Quick Actions -->
+    <div class="flex gap-4 mb-6">
+      <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+        Create New Course
+      </button>
+      <button class="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors">
+        Manage Courses
+      </button>
+      <button class="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors">
+        View Analytics
+      </button>
+    </div>
+
+    <!-- Stats Summary -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+      <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
+        <h3 class="text-sm font-medium text-gray-500">Total Courses</h3>
+        <p class="text-2xl font-bold text-gray-900">{{ totalCourses }}</p>
+      </div>
+      <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
+        <h3 class="text-sm font-medium text-gray-500">Total Students</h3>
+        <p class="text-2xl font-bold text-gray-900">{{ totalStudents }}</p>
+      </div>
+      <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
+        <h3 class="text-sm font-medium text-gray-500">Total Earnings</h3>
+        <p class="text-2xl font-bold text-gray-900">${{ totalEarnings }}</p>
+      </div>
+    </div>
+
+    <!-- Enrollment Chart -->
+    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+      <h3 class="text-lg font-semibold mb-4">Course Enrollments</h3>
+      <div class="h-[300px]">
+        <canvas id="enrollmentChart"></canvas>
+      </div>
+    </div>
+
+    <!-- Recent Activity -->
+    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+      <h3 class="text-lg font-semibold mb-4">Recent Activity</h3>
+      <div class="h-[45vh] overflow-y-auto">
+        @for (activity of recentActivity; track activity.id) {
+          <div class="flex items-center p-3 hover:bg-gray-50 rounded-lg transition-colors">
+            <div [class]="getActivityIconClass(activity.type)">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path [attr.d]="getActivityIcon(activity.type)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+              </svg>
+            </div>
+            <div class="ml-4">
+              <p class="text-sm text-gray-900">{{ activity.message }}</p>
+              <p class="text-xs text-gray-500">{{ activity.timestamp | date:'short' }}</p>
+            </div>
+            @if (activity.status) {
+              <span [class]="getStatusBadgeClass(activity.status)" class="ml-auto text-xs px-2 py-1 rounded-full">
+                {{ activity.status }}
+              </span>
+            }
+          </div>
+        }
+      </div>
+    </div>
+  </div>

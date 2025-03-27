@@ -1,0 +1,16 @@
+.sidebar-transition {
+    transition: transform 0.3s ease-in-out;
+  }
+  .content-area-transition {
+    transition: margin-left 0.3s ease-in-out;
+  }
+  :host {
+    display: block;
+    width: 100%;
+    overflow-x: hidden;
+  }
+  :host ::ng-deep .content-wrapper {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }

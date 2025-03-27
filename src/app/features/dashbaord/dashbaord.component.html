@@ -1,0 +1,442 @@
+<div class="flex min-h-screen bg-gray-100">
+    <!-- Top Navigation Bar -->
+    <nav class="fixed top-0 left-0 right-0 h-14 bg-white shadow-sm z-50 px-4 border-b border-gray-300">
+        <div class="flex items-center justify-between h-full">
+            <!-- Left section with toggle button -->
+            <div class="flex items-center space-x-3">
+                <button (click)="toggleSidebar()" class="p-2 text-gray-600 hover:text-gray-900 focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+                <!-- logo section -->
+                <span 
+                  (click)="navigateToHome()"
+                  class="text-xl font-bold text-gray-800">Fundo-Online</span>
+            </div>
+            
+            <!-- Center search section -->
+            <div class="flex-1 max-w-xl mx-auto hidden md:block">
+                <div class="relative">
+                    <input 
+                        type="text"
+                        placeholder="Search for courses, resources, or topics..."
+                        class="w-full h-9 pl-10 pr-4 py-1.5 text-sm bg-gray-50 border border-gray-200 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-300 transition-colors"
+                        [(ngModel)]="searchQuery"
+                        (keyup.enter)="search()">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <svg class="h-4 w-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right section -->
+            <div class="flex items-center space-x-4">
+                <!-- Mobile search toggle button -->
+                <button (click)="toggleMobileSearch()" class="p-2 text-gray-600 hover:text-gray-900 md:hidden">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                </button>
+
+                <!-- Notifications -->
+                <div class="relative group">
+                    <button class="relative p-2 text-gray-600 hover:text-gray-900">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+                        </svg>
+                        <!-- Updated notification badge -->
+                        @if (unreadNotifications > 0) {
+                          <span class="absolute -top-1 -right-1 inline-flex items-center justify-center px-1.5 py-0.5 text-xs font-bold leading-none text-white bg-red-600 rounded-full animate-pulse">
+                            {{ unreadNotifications }}
+                          </span>
+                         }
+                    </button>
+
+                    <!-- Notifications Dropdown -->
+                    <div class="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-lg py-2 z-50 
+                                opacity-0 invisible group-hover:opacity-100 group-hover:visible 
+                                transition-all duration-300 transform origin-top-right scale-95 group-hover:scale-100">
+                        <div class="px-4 py-2 border-b border-gray-100">
+                            <h3 class="text-sm font-medium text-gray-900">Notifications</h3>
+                        </div>
+                        
+                        @if (recentNotifications.length > 0) {
+                            <div class="max-h-64 overflow-y-auto">
+                                @for (notification of recentNotifications; track notification.id) {
+                                    <div class="px-4 py-3 hover:bg-gray-50 flex items-start">
+                                        <div class="flex-shrink-0">
+                                            <div [class]="'w-2 h-2 mt-2 rounded-full ' + (notification.read ? 'bg-gray-300' : 'bg-blue-600')"></div>
+                                        </div>
+                                        <div class="ml-3">
+                                            <p class="text-sm text-gray-900">{{ notification.message }}</p>
+                                            <p class="text-xs text-gray-500 mt-1">{{ notification.date | date:'shortTime' }}</p>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                            <div class="px-4 py-2 border-t border-gray-100 text-xs text-gray-500">
+                                You have {{ totalNotifications }} notifications
+                            </div>
+                        } @else {
+                            <div class="px-4 py-6 text-center text-sm text-gray-500">
+                                No new notifications
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <!-- Shopping Cart -->
+                <div class="relative group">
+                    <button class="relative p-2 text-gray-600 hover:text-gray-900">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+                        </svg>
+                        @if (cartItemsCount > 0) {
+                            <span class="absolute -top-1 -right-1 bg-blue-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                                {{ cartItemsCount }}
+                            </span>
+                        }
+                    </button>
+
+                    <!-- Cart Dropdown -->
+                    <div class="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-lg py-2 z-50 
+                                opacity-0 invisible group-hover:opacity-100 group-hover:visible 
+                                transition-all duration-300 transform origin-top-right scale-95 group-hover:scale-100">
+                        <div class="px-4 py-2 border-b border-gray-100">
+                            <h3 class="text-sm font-medium text-gray-900">Shopping Cart</h3>
+                        </div>
+
+                        @if (cartItems.length > 0) {
+                            <div class="max-h-64 overflow-y-auto">
+                                @for (item of cartItems; track item.id) {
+                                    <div class="px-4 py-3 hover:bg-gray-50 flex items-center justify-between">
+                                        <div class="flex-1">
+                                            <h4 class="text-sm text-gray-900">{{ item.title }}</h4>
+                                            <p class="text-sm text-gray-500">${{ item.price }}</p>
+                                        </div>
+                                        <button class="text-red-500 hover:text-red-700">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                }
+                            </div>
+                            <div class="px-4 py-3 border-t border-gray-100">
+                                <div class="flex justify-between text-sm text-gray-900">
+                                    <span>Total:</span>
+                                    <span>${{ cartTotal }}</span>
+                                </div>
+                                <button class="mt-3 w-full bg-blue-600 text-white py-2 px-4 rounded-md text-sm hover:bg-blue-700 transition-colors">
+                                    Checkout
+                                </button>
+                            </div>
+                        } @else {
+                            <div class="px-4 py-6 text-center text-sm text-gray-500">
+                                Your cart is empty
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <!-- Wishlist -->
+                <div class="relative group">
+                    <button class="relative p-2 text-gray-600 hover:text-gray-900">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                        </svg>
+                        @if (wishlistCount > 0) {
+                            <span class="absolute -top-1 -right-1 bg-pink-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                                {{ wishlistCount }}
+                            </span>
+                        }
+                    </button>
+
+                    <!-- Wishlist Dropdown -->
+                    <div class="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-lg py-2 z-50 
+                                opacity-0 invisible group-hover:opacity-100 group-hover:visible 
+                                transition-all duration-300 transform origin-top-right scale-95 group-hover:scale-100">
+                        <div class="px-4 py-2 border-b border-gray-100">
+                            <h3 class="text-sm font-medium text-gray-900">Course Updates</h3>
+                        </div>
+
+                        @if (wishlistUpdates.length > 0) {
+                            <div class="max-h-64 overflow-y-auto">
+                                @for (update of wishlistUpdates; track update.id) {
+                                    <div class="px-4 py-3 hover:bg-gray-50">
+                                        <h4 class="text-sm text-gray-900">{{ update.courseTitle }}</h4>
+                                        <p class="text-xs text-gray-500 mt-1">{{ update.message }}</p>
+                                        <p class="text-xs text-gray-400 mt-1">{{ update.date | date:'shortTime' }}</p>
+                                    </div>
+                                }
+                            </div>
+                        } @else {
+                            <div class="px-4 py-6 text-center text-sm text-gray-500">
+                                You have {{ wishlistCount }} courses in your wishlist
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <div class="relative group">
+                  <button class="flex items-center space-x-3">
+                      @if (userProfile?.image) {
+                          <img [src]="userProfile?.image" alt="Profile" class="w-8 h-8 rounded-full object-cover">
+                      } @else {
+                          <div class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white">
+                            {{ getInitials(userProfile?.name || '') }}
+                          </div>
+                      }
+                  </button>
+              
+                  <!-- User Menu Dropdown -->
+                  <div class="absolute right-0 mt-2 w-72 bg-white rounded-lg shadow-lg py-2 z-50 
+                  opacity-0 invisible group-hover:opacity-100 group-hover:visible 
+                  transition-all duration-300 transform origin-top-right scale-95 group-hover:scale-100
+                  before:absolute before:h-4 before:-top-4 before:left-0 before:right-0 before:content-['']">
+                      <!-- User Info Section -->
+                      <div class="px-4 py-3 border-b border-gray-100">
+                          <div class="flex items-center space-x-3">
+                              @if (userProfile?.image) {
+                                  <img [src]="userProfile?.image" alt="Profile" class="w-12 h-12 rounded-full object-cover">
+                              } @else {
+                                  <div class="w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center text-white text-lg">
+                                    {{ getInitials(userProfile?.name || '') }}
+                                  </div>
+                              }
+                              <div class="flex-1">
+                                  <h4 class="text-sm font-medium text-gray-900">{{ userProfile?.name || 'User Name' }}</h4>
+                                  <p class="text-xs text-gray-500">{{ userProfile?.email || 'user@example.com' }}</p>
+                              </div>
+                          </div>
+                      </div>
+              
+
+                        <!-- Menu Options -->
+                        <div class="py-1">
+                            <a 
+                              routerLink="/dasboard/my-courses"
+                              href="#" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                <svg class="w-4 h-4 mr-3 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                                </svg>
+                                My Courses
+                            </a>
+                            <a 
+                              routerLink="/dashboard/wishlist"
+                              href="#" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                <svg class="w-4 h-4 mr-3 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                                </svg>
+                                Wishlist
+                            </a>
+                            <a 
+                              
+                              href="#" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                <svg class="w-4 h-4 mr-3 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+                                </svg>
+                                My Cart
+                            </a>
+                            <a 
+                              routerLink="/dashboard/notifications"
+                              href="#" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                <svg class="w-4 h-4 mr-3 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+                                </svg>
+                                Notifications
+                            </a>
+                            <a href="#" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                <svg class="w-4 h-4 mr-3 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/>
+                                </svg>
+                                Messages
+                            </a>
+                            
+                            <div class="border-t border-gray-100 my-1"></div>
+                            
+                            <a href="#" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                <svg class="w-4 h-4 mr-3 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
+                                </svg>
+                                Payment Methods
+                            </a>
+                            <a href="#" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                <svg class="w-4 h-4 mr-3 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+                                </svg>
+                                Subscriptions
+                            </a>
+                            <a href="#" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                <svg class="w-4 h-4 mr-3 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                                </svg>
+                                Purchase History
+                            </a>
+                            <a href="#" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                <svg class="w-4 h-4 mr-3 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                </svg>
+                                Account Settings
+                            </a>
+                            <a href="#" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                <svg class="w-4 h-4 mr-3 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                Help & Support
+                            </a>
+                            
+                            <div class="border-t border-gray-100 my-1"></div>
+                            
+                            <button (click)="logout()" class="w-full flex items-center px-4 py-2 text-sm text-red-700 hover:bg-red-50">
+                                <svg class="w-4 h-4 mr-3 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                                </svg>
+                                Logout
+                            </button>
+                            
+                            <div class="border-t border-gray-100 mt-1 mb-1"></div>
+                            
+                            <!-- Teach on Fundo Option -->
+                            <a 
+                              routerLink="/dashboard/teach"
+                              href="#" class="flex items-center px-4 py-2 text-sm text-blue-600 hover:bg-blue-50">
+                                <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                                </svg>
+                                Teach on Fundo-Online
+                            </a>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- Side Navigation -->
+  <aside class="fixed top-14 left-0 h-[calc(100vh-56px)]   w-64 bg-white shadow-lg text-xs flex flex-col transition-all duration-300"
+           [ngClass]="isSidebarOpen ? 'translate-x-0' : '-translate-x-64'">
+        <!-- Scrollable Navigation -->
+   <nav class="overflow-y-auto flex-1 p-2  [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:bg-gray-200 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100">
+     <div class="p-2">
+       <a 
+          routerLink="/dashboard/home"
+          routerLinkActive="bg-gray-100"
+          class="flex flex-row group px-3 w-full justify-start hover:bg-gray-50 p-2 rounded-md cursor-pointer">
+            <svg class="h-5 w-5 mr-3 text-gray-500 group-hover:text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+            </svg>
+            <span>Home</span>  
+        </a>
+
+        <a 
+          routerLink="/dashboard/notifications"
+          routerLinkActive="bg-gray-100"
+          class="flex flex-row group px-3 w-full justify-start hover:bg-gray-50 p-2 rounded-md cursor-pointer">
+            <svg class="h-5 w-5 mr-3 text-gray-500 group-hover:text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+            </svg>
+            <span>Notifications</span>  
+        </a>
+
+         <h3 class="p-2 text-xs font-semibold uppercase tracking-wider mt-6 mb-2 border-b border-gray-300 text-black">
+           Admin Panel
+         </h3>
+
+        <a 
+          routerLink="/dashboard/admin-dashboard"
+          routerLinkActive="bg-gray-100"
+          class="flex flex-row group px-3 w-full justify-start hover:bg-gray-50 p-2 rounded-md cursor-pointer">
+            <svg class="h-5 w-5 mr-3 text-gray-500 group-hover:text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
+            </svg>
+            <span>Admin Dashboard</span>  
+        </a>
+        
+        <div 
+          (click)="myView='user-management'"
+          class="flex flex-row group px-3 w-full justify-start hover:bg-gray-50 p-2 rounded-md cursor-pointer">
+            <svg class="h-5 w-5 mr-3 text-gray-500 group-hover:text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+            </svg>
+            <span>User Management</span>  
+        </div>
+
+        <div 
+          (click)="myView='course-management'"
+          class="flex flex-row group px-3 w-full justify-start hover:bg-gray-50 p-2 rounded-md cursor-pointer">
+            <svg class="h-5 w-5 mr-3 text-gray-500 group-hover:text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+            </svg>
+            <span>Course Management</span>
+        </div>
+
+        <div 
+          (click)="myView='payment'"
+          class="flex flex-row group px-3 w-full justify-start hover:bg-gray-50 p-2 rounded-md cursor-pointer">
+            <svg class="h-5 w-5 mr-3 text-gray-500 group-hover:text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
+            </svg>
+            <span>Payment and Subscription</span>
+        </div>
+
+        <div 
+          (click)="myView='analytics'"
+          class="flex flex-row group px-3 w-full justify-start hover:bg-gray-50 p-2 rounded-md cursor-pointer">
+            <svg class="h-5 w-5 mr-3 text-gray-500 group-hover:text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+            </svg>
+            <span>Reports and Analytics</span>
+        </div>
+
+        <div 
+          (click)="myView='security'"
+          class="flex flex-row group px-3 w-full justify-start hover:bg-gray-50 p-2 rounded-md cursor-pointer">
+            <svg class="h-5 w-5 mr-3 text-gray-500 group-hover:text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+            </svg>
+            <span>Security and Settings</span>
+        </div>
+
+        <div 
+          (click)="setView('teach')" 
+          [class.active]="myView === 'teach'"
+          class="flex flex-row group px-3 w-full justify-start hover:bg-gray-50 p-2 rounded-md cursor-pointer">
+            <svg class="h-5 w-5 mr-3 text-gray-500 group-hover:text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838l-2.727 1.17 1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"/>
+            </svg>
+            <span>Teach on Fundo-Online</span>
+        </div>
+       </div>
+    </nav>
+</aside>
+
+  <!-- Main Content -->
+  <div class="flex-1 transition-all duration-300 min-h-screen overflow-x-hidden"
+       [ngClass]="{'ml-64': isSidebarOpen, 'ml-0': !isSidebarOpen}">
+    <div class="h-[calc(100vh-56px)]  mt-14 overflow-auto max-w-full">
+        <!-- Router outlet for child routes -->
+        <router-outlet></router-outlet>
+        
+        <!-- Conditional rendering for dashboard views -->
+        <ng-container *ngIf="!isRouterOutletActive">
+            @if (myView==='home') {
+                <app-home class="block w-full"></app-home>
+            }
+            @if (myView==='admin-dashboard') {
+                <app-admin-dashboard class="block w-full"></app-admin-dashboard>
+            }
+            @if (myView==='user-management') {
+            }
+            
+            <!-- Add other view conditions here -->
+        </ng-container>
+    </div>
+  </div>
+
+
+</div>

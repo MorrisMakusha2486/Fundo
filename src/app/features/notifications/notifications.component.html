@@ -1,0 +1,85 @@
+<div class="bg-white flex flex-col h-full">
+    <!-- Header Section -->
+    <div class="bg-gray-800 px-4 py-3 flex justify-between items-center shadow-sm">
+        <h2 class="text-sm font-semibold text-white tracking-wider uppercase">Notifications</h2>
+        <div class="flex items-center space-x-4">
+            <button (click)="refreshData()" class="p-1.5 rounded-full text-gray-300 hover:text-gray-400 transition-all duration-200 group">
+                <svg class="w-4 h-4 transform group-hover:rotate-180 transition-transform duration-500" 
+                     fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                          d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Notification Controls -->
+    <div class="flex justify-between items-center px-4 py-3 flex-shrink-0">
+        <div class="flex space-x-2">
+            <button (click)="markAllAsRead()" 
+                    class="px-3 py-1.5 text-xs font-medium rounded-md bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors">
+                Mark all as read
+            </button>
+            <button (click)="clearAll()" 
+                    class="px-3 py-1.5 text-xs font-medium rounded-md bg-gray-50 text-gray-600 hover:bg-gray-100 transition-colors">
+                Clear all
+            </button>
+        </div>
+        <div class="flex items-center space-x-3">
+            <span class="text-xs text-gray-500">Filter by:</span>
+            <div class="relative">
+                <select [(ngModel)]="selectedFilter" 
+                        (change)="onFilterChange($event)"
+                        class="appearance-none text-xs bg-white border border-gray-200 rounded-lg pl-3 pr-8 py-1.5 focus:ring-[rgb(75,192,192)] focus:border-[rgb(75,192,192)] cursor-pointer hover:border-gray-300 transition-colors">
+                    <option value="all">All notifications</option>
+                    <option value="unread">Unread</option>
+                    <option value="system">System</option>
+                    <option value="orders">Orders</option>
+                    <option value="inventory">Inventory</option>
+                </select>
+                <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                    <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notifications List - Fixed Height with Hidden Scrollbar -->
+    <div class="flex-1 overflow-y-auto px-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']">
+        <div class="space-y-2 py-2">
+            <div *ngFor="let notification of filteredNotifications" 
+                 [class.bg-blue-50]="!notification.isRead"
+                 [class.bg-white]="notification.isRead"
+                 class="p-3 rounded-lg border hover:shadow-sm transition-shadow"
+                 [class.border-blue-100]="!notification.isRead"
+                 [class.border-gray-200]="notification.isRead">
+                <div class="flex items-start">
+                    <div class="flex-shrink-0" *ngIf="!notification.isRead">
+                        <span class="inline-block h-2 w-2 rounded-full bg-blue-600"></span>
+                    </div>
+                    <div class="ml-3 flex-1">
+                        <div class="flex justify-between items-start">
+                            <p class="text-sm font-medium text-gray-900">{{ notification.title }}</p>
+                            <span class="text-xs font-medium text-[rgb(75,192,192)]">{{ notification.timestamp }}</span>
+                        </div>
+                        <p class="mt-1 text-xs text-gray-600 line-clamp-2">{{ notification.message }}</p>
+                    </div>
+                    <button (click)="deleteNotification(notification.id)" 
+                            class="ml-4 text-gray-400 hover:text-gray-500 p-1">
+                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Empty State -->
+            <div *ngIf="filteredNotifications.length === 0" 
+                 class="text-center py-8">
+                <p class="text-gray-500 text-sm">No notifications found</p>
+            </div>
+        </div>
+    </div>
+</div>
