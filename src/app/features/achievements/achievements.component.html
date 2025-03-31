@@ -1,0 +1,374 @@
+<!-- achievements.component.html -->
+
+<!-- Header Section with Right-to-Left Black Gradient -->
+<div class="relative bg-black py-16">
+  <!-- Background Image -->
+  <div class="absolute inset-0">
+    <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=1920&auto=format&fit=crop" 
+         alt="Achievement background" class="w-full h-full object-cover opacity-50">
+  </div>
+  
+  <!-- Right-to-Left Black to Transparent Gradient Overlay -->
+  <div class="absolute inset-0 bg-gradient-to-l from-transparent to-black"></div>
+  
+  <!-- Content -->
+  <div class="container mx-auto px-4 relative z-10">
+    <div class="max-w-3xl">
+      <h1 class="text-3xl md:text-4xl font-bold text-white mb-4">Your Achievements</h1>
+      <p class="text-gray-200 text-lg max-w-2xl">
+        Track your learning journey, earn badges, and share your accomplishments with your network. 
+        Each achievement represents a milestone in your professional development.
+      </p>
+    </div>
+  </div>
+</div>
+  
+<!-- Progress Overview Section - Redesigned -->
+<div class="bg-white py-8 shadow-md">
+  <div class="container mx-auto px-4">
+    <!-- Progress Bar -->
+    <div class="flex flex-col mb-8">
+      <div class="flex items-center justify-between mb-2">
+        <h2 class="font-semibold text-gray-700">Overall Learning Progress</h2>
+        <span class="text-sm font-medium text-blue-600">{{ (achievementStats.unlocked / achievementStats.total * 100).toFixed(0) }}% Complete</span>
+      </div>
+      <div class="h-3 w-full bg-gray-100 rounded-full overflow-hidden">
+        <div class="h-full bg-gradient-to-r from-blue-500 to-blue-600 rounded-full" 
+             [style.width]="(achievementStats.unlocked / achievementStats.total * 100) + '%'"></div>
+      </div>
+    </div>
+    
+    <!-- Stats Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <!-- Completed Courses Card -->
+      <div class="bg-white rounded-lg border border-gray-100 shadow-sm p-5 transition-all hover:shadow-md">
+        <div class="flex items-center">
+          <div class="rounded-full bg-blue-100 p-3 mr-4">
+            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <div>
+            <div class="text-3xl font-bold text-gray-800">{{ achievementStats.unlocked }}</div>
+            <div class="text-sm text-gray-500">Completed Courses</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- In Progress Card -->
+      <div class="bg-white rounded-lg border border-gray-100 shadow-sm p-5 transition-all hover:shadow-md">
+        <div class="flex items-center">
+          <div class="rounded-full bg-yellow-100 p-3 mr-4">
+            <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <div>
+            <div class="text-3xl font-bold text-gray-800">{{ achievementStats.inProgress }}</div>
+            <div class="text-sm text-gray-500">Courses In Progress</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Certificates Card -->
+      <div class="bg-white rounded-lg border border-gray-100 shadow-sm p-5 transition-all hover:shadow-md">
+        <div class="flex items-center">
+          <div class="rounded-full bg-green-100 p-3 mr-4">
+            <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+          </div>
+          <div>
+            <div class="text-3xl font-bold text-gray-800">{{ certifications.length }}</div>
+            <div class="text-sm text-gray-500">Earned Certificates</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <!-- Controls and Filters -->
+  <div class="container mx-auto px-4 py-6">
+    <div class="flex flex-col md:flex-row justify-between items-center mb-6">
+      <!-- Search Box -->
+      <div class="relative w-full md:w-64 mb-4 md:mb-0">
+        <input 
+          type="text" 
+          [(ngModel)]="searchQuery"
+          placeholder="Search achievements..." 
+          class="w-full px-4 py-2 pl-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <svg class="absolute left-3 top-2.5 h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+      </div>
+      
+      <!-- Filters -->
+      <div class="flex flex-wrap items-center space-x-2">
+        <!-- Status Filter -->
+        <div class="relative">
+          <select 
+            [(ngModel)]="filters.status"
+            (change)="applyFilters()"
+            class="appearance-none pl-4 pr-10 py-2 border border-gray-300 rounded-lg bg-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <option value="all">All Status</option>
+            <option value="unlocked">Unlocked</option>
+            <option value="in-progress">In Progress</option>
+            <option value="locked">Locked</option>
+          </select>
+          <svg class="absolute right-3 top-2.5 h-5 w-5 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </div>
+        
+        <!-- Category Filter -->
+        <div class="relative">
+          <select 
+            [(ngModel)]="filters.category"
+            (change)="applyFilters()"
+            class="appearance-none pl-4 pr-10 py-2 border border-gray-300 rounded-lg bg-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <option value="all">All Categories</option>
+            <option value="course">Course Completion</option>
+            <option value="exam">Exam Success</option>
+            <option value="milestone">Learning Milestones</option>
+            <option value="special">Special Awards</option>
+          </select>
+          <svg class="absolute right-3 top-2.5 h-5 w-5 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </div>
+        
+        <!-- Sort Options -->
+        <div class="relative">
+          <select 
+            [(ngModel)]="sortOption"
+            (change)="sortAchievements()"
+            class="appearance-none pl-4 pr-10 py-2 border border-gray-300 rounded-lg bg-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <option value="recent">Most Recent</option>
+            <option value="oldest">Oldest First</option>
+            <option value="points-high">Highest Points</option>
+            <option value="points-low">Lowest Points</option>
+          </select>
+          <svg class="absolute right-3 top-2.5 h-5 w-5 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Achievements Grid -->
+  <div class="container mx-auto px-4 mb-16">
+    <h2 class="text-2xl font-bold text-gray-800 mb-6">Your Learning Journey</h2>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Achievement Card Template -->
+      <div *ngFor="let achievement of filteredAchievements" 
+           class="bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg border border-gray-100"
+           [ngClass]="{'opacity-60': achievement.status === 'locked'}">
+        
+        <!-- Card Header with Icon -->
+        <div class="relative h-24 p-4" [ngClass]="{
+          'bg-gradient-to-r from-blue-500 to-blue-600': achievement.status === 'unlocked',
+          'bg-gradient-to-r from-yellow-400 to-yellow-500': achievement.status === 'in-progress',
+          'bg-gradient-to-r from-gray-300 to-gray-400': achievement.status === 'locked'
+        }">
+          <!-- Category Badge -->
+          <span class="absolute top-3 right-3 text-xs font-medium px-2 py-1 rounded-full text-white" 
+                [ngClass]="{
+                  'bg-blue-700': achievement.category === 'course',
+                  'bg-green-700': achievement.category === 'exam',
+                  'bg-purple-700': achievement.category === 'milestone',
+                  'bg-red-700': achievement.category === 'special'
+                }">
+            {{ getCategoryLabel(achievement.category) }}
+          </span>
+          
+          <!-- Achievement Icon -->
+          <div class="absolute -bottom-8 left-6 h-16 w-16 rounded-full bg-white shadow-md flex items-center justify-center p-2">
+            <img [src]="achievement.iconUrl" alt="Achievement Icon" class="h-10 w-10">
+          </div>
+        </div>
+        
+        <!-- Card Content -->
+        <div class="pt-10 px-6 pb-6">
+          <div class="flex justify-between items-start mb-3">
+            <h3 class="text-lg font-semibold text-gray-900 pr-4">{{ achievement.title }}</h3>
+            <div class="flex items-center">
+              <svg *ngIf="achievement.status === 'unlocked'" class="h-5 w-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+              </svg>
+            </div>
+          </div>
+          
+          <p class="text-sm text-gray-600 mb-4">{{ achievement.description }}</p>
+          
+          <div class="flex justify-between items-center">
+            <!-- Points/Progress -->
+            <div class="flex items-center">
+              <span class="flex items-center text-sm font-medium" [ngClass]="{
+                'text-blue-600': achievement.status === 'unlocked',
+                'text-yellow-500': achievement.status === 'in-progress',
+                'text-gray-500': achievement.status === 'locked'
+              }">
+                <svg class="h-4 w-4 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span *ngIf="achievement.status === 'unlocked'">{{ achievement.dateEarned | date:'MMM d, y' }}</span>
+                <span *ngIf="achievement.status === 'in-progress'">{{ achievement.progress }}% complete</span>
+                <span *ngIf="achievement.status === 'locked'">Locked</span>
+              </span>
+            </div>
+            
+            <!-- Points -->
+            <div class="text-sm font-semibold text-gray-700">
+              {{ achievement.points }} pts
+            </div>
+          </div>
+          
+          <!-- Progress Bar (for in-progress achievements) -->
+          <div *ngIf="achievement.status === 'in-progress'" class="mt-3">
+            <div class="w-full h-1.5 bg-gray-200 rounded-full overflow-hidden">
+              <div class="h-full bg-yellow-500 rounded-full" [style.width]="achievement.progress + '%'"></div>
+            </div>
+          </div>
+          
+          <!-- Share Buttons (for unlocked achievements only) -->
+          <div *ngIf="achievement.status === 'unlocked'" class="mt-4 flex justify-between items-center">
+            <div class="flex space-x-2">
+              <!-- Facebook -->
+              <button (click)="shareAchievement(achievement, 'facebook')" class="p-2 rounded-full bg-blue-100 text-blue-600 hover:bg-blue-600 hover:text-white transition-colors">
+                <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M18.77 7.46H14.5v-1.9c0-.9.6-1.1 1-1.1h3V.5h-4.33C10.24.5 9.5 3.44 9.5 5.32v2.15h-3v4h3v12h5v-12h3.85l.42-4z"/>
+                </svg>
+              </button>
+              
+              <!-- Twitter -->
+              <button (click)="shareAchievement(achievement, 'twitter')" class="p-2 rounded-full bg-blue-100 text-blue-400 hover:bg-blue-400 hover:text-white transition-colors">
+                <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M23.44 4.83c-.8.37-1.5.38-2.22.02.93-.56.98-.96 1.32-2.02-.88.52-1.86.9-2.9 1.1-.82-.88-2-1.43-3.3-1.43-2.5 0-4.55 2.04-4.55 4.54 0 .36.03.7.1 1.04-3.77-.2-7.12-2-9.36-4.75-.4.67-.6 1.45-.6 2.3 0 1.56.8 2.95 2 3.77-.74-.03-1.44-.23-2.05-.57v.06c0 2.2 1.56 4.03 3.64 4.44-.67.2-1.37.2-2.06.08.58 1.8 2.26 3.12 4.25 3.16-1.9 1.47-4.3 2.35-6.9 2.35-.45 0-.9-.02-1.34-.1 2.46 1.58 5.37 2.5 8.5 2.5 9.14 0 14.2-7.6 14.2-14.2v-.65c.94-.7 1.8-1.6 2.43-2.6z"/>
+                </svg>
+              </button>
+              
+              <!-- LinkedIn -->
+              <button (click)="shareAchievement(achievement, 'linkedin')" class="p-2 rounded-full bg-blue-100 text-blue-700 hover:bg-blue-700 hover:text-white transition-colors">
+                <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z"/>
+                </svg>
+              </button>
+            </div>
+            
+            <button *ngIf="achievement.certificateUrl" 
+        (click)="downloadCertificate(achievement)" 
+        class="text-sm text-blue-600 hover:text-blue-800 flex items-center">
+  <svg class="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+  </svg>
+  Certificate
+</button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- If no achievements match filters -->
+      <div *ngIf="filteredAchievements.length === 0" class="col-span-3 py-16 text-center">
+        <svg class="mx-auto h-16 w-16 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <h3 class="mt-4 text-lg font-medium text-gray-900">No achievements found</h3>
+        <p class="mt-1 text-sm text-gray-500">Try adjusting your filters or search criteria.</p>
+        <div class="mt-6">
+          <button (click)="resetFilters()" class="px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+            Reset Filters
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Certifications Section -->
+  <div class="bg-gray-50 py-12">
+    <div class="container mx-auto px-4">
+      <h2 class="text-2xl font-bold text-gray-800 mb-8">Your Certifications</h2>
+      
+      <!-- Certificate Items -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div *ngFor="let cert of certifications" class="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-100 p-6 hover:shadow-md transition-shadow">
+          <div class="flex justify-between items-start">
+            <div class="flex items-center">
+              <div class="flex-shrink-0 h-12 w-12 bg-blue-100 rounded-full flex items-center justify-center">
+                <svg class="h-6 w-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                </svg>
+              </div>
+              <h3 class="ml-4 text-lg font-medium text-gray-900">{{ cert.name }}</h3>
+            </div>
+            
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium" 
+                  [ngClass]="{
+                    'bg-green-100 text-green-800': cert.status === 'active',
+                    'bg-yellow-100 text-yellow-800': cert.status === 'expiring-soon',
+                    'bg-gray-100 text-gray-800': cert.status === 'expired'
+                  }">
+              {{ cert.status | titlecase }}
+            </span>
+          </div>
+          
+          <p class="mt-4 text-sm text-gray-600">{{ cert.description }}</p>
+          
+          <div class="mt-4 flex items-center justify-between">
+            <div class="text-sm text-gray-500">
+              <span>Issued: {{ cert.issueDate | date:'MMM d, y' }}</span>
+              <span *ngIf="cert.expiryDate" class="ml-4">Expires: {{ cert.expiryDate | date:'MMM d, y' }}</span>
+            </div>
+            
+            <a [href]="cert.downloadUrl" download class="flex items-center text-sm font-medium text-blue-600 hover:text-blue-800">
+              <svg class="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+              </svg>
+              Download
+            </a>
+          </div>
+        </div>
+        
+        <!-- If no certifications -->
+        <div *ngIf="certifications.length === 0" class="col-span-3 py-16 text-center">
+          <svg class="mx-auto h-16 w-16 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+          <h3 class="mt-4 text-lg font-medium text-gray-900">No certifications yet</h3>
+          <p class="mt-1 text-sm text-gray-500">Complete courses and exams to earn certifications!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Badge Collection Section -->
+  <div class="container mx-auto px-4 py-12">
+    <h2 class="text-2xl font-bold text-gray-800 mb-8">Your Badge Collection</h2>
+    
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
+      <div *ngFor="let badge of badges" 
+           class="flex flex-col items-center text-center transition-transform hover:scale-105">
+        <div class="relative inline-block">
+          <img [src]="badge.imageUrl" [alt]="badge.name" class="h-20 w-20 mb-2"
+               [ngClass]="{'filter grayscale': !badge.earned}">
+          <div *ngIf="badge.earned" class="absolute -top-2 -right-2 h-6 w-6 bg-green-500 rounded-full flex items-center justify-center">
+            <svg class="h-4 w-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+            </svg>
+          </div>
+        </div>
+        <h3 class="text-sm font-medium text-gray-800">{{ badge.name }}</h3>
+        <p class="text-xs text-gray-500">{{ badge.earned ? 'Earned' : 'Not Earned' }}</p>
+        
+        <!-- Badge tooltip -->
+        <div class="mt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 bg-gray-900 text-white text-xs rounded py-1 px-2 max-w-xs">
+          {{ badge.description }}
+        </div>
+      </div>
+    </div>
+  </div>

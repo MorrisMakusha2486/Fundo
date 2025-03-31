@@ -22,7 +22,7 @@
                    hover:bg-gray-100 hover:border-blue-400 transition-all duration-300 
                    flex items-center space-x-2 group text-sm">
             <div
-              (click)="navigateTo('dashboard')" 
+              (click)="navigateTo('login')" 
               class="font-semibold ">Login</div>
             <svg xmlns="http://www.w3.org/2000/svg" 
                  class="h-3.5 w-3.5 transform group-hover:translate-x-1 transition-transform duration-300" 
@@ -48,6 +48,7 @@
         <div class="flex flex-row w-full space-x-3">
          <a >
            <button 
+             (click)="navigateTo('get-started')"
              class="mt-8 bg-white text-blue-600 px-8 py-3 rounded-full font-bold hover:bg-gray-700 transition duration-300">
              Get Started
            </button>

@@ -1,0 +1,123 @@
+<div class="min-h-screen bg-gray-50 pt-12">
+    <!-- Header Section with increased spacing -->
+    <div class="text-center mb-5">
+        <h1 class="text-3xl font-semibold text-gray-800 mb-6">Getting Started is Easy</h1>
+      
+    </div>
+
+     <!-- boarder -->
+     <div class="flex flex-row w-full  justify-center">
+        <div class="flex flex-row w-10/12 border-gray-300 border border-t border-2 my-6 rounded-t"></div>
+      </div>
+
+     <!-- Additional Information Section -->
+     <div class="max-w-4xl mx-auto  text-center mb-5">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="p-4">
+            <div class="text-gray-800 text-3xl mb-4">
+              <i class="fas fa-user-plus"></i>
+            </div>
+            <h4 class="text-lg font-medium text-gray-800 mb-2">1. Select Your Role</h4>
+            <p class="text-gray-600">Choose the appropriate access level for your responsibilities</p>
+          </div>
+          <div class="p-4">
+            <div class="text-gray-800 text-3xl mb-4">
+              <i class="fas fa-cog"></i>
+            </div>
+            <h4 class="text-lg font-medium text-gray-800 mb-2">2. Configure Profile</h4>
+            <p class="text-gray-600">Set up your workspace preferences and notifications</p>
+          </div>
+          <div class="p-4">
+            <div class="text-gray-800 text-3xl mb-4">
+              <i class="fas fa-check-circle"></i>
+            </div>
+            <h4 class="text-lg font-medium text-gray-800 mb-2">3. Start Managing</h4>
+            <p class="text-gray-600">Begin managing inventory and processing transactions</p>
+          </div>
+        </div>
+      </div>
+
+     
+
+    <!-- Role Selection Cards -->
+    <div class="max-w-7xl mx-auto grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
+      <!-- Admin Card -->
+      <div class="bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden">
+        <div class="p-6">
+          <div class="flex items-center mb-4">
+            <div class="p-2 bg-gray-100 rounded-lg">
+              <i class="fas fa-user-shield text-2xl text-gray-700"></i>
+            </div>
+            <h2 class="ml-3 text-xl font-semibold text-gray-800">Student</h2>
+          </div>
+          <p class="text-gray-600 mb-4">
+            Complete system control with access to inventory management, analytics, user permissions, and supply chain oversight
+          </p>
+          <ul class="space-y-2 mb-6 text-gray-600">
+            <li class="flex items-center">
+              <i class="fas fa-check text-green-500 mr-2"></i>
+              Manage inventory levels and stock locations
+            </li>
+            <li class="flex items-center">
+              <i class="fas fa-check text-green-500 mr-2"></i>
+              Access advanced analytics and reporting
+            </li>
+            <li class="flex items-center">
+              <i class="fas fa-check text-green-500 mr-2"></i>
+              Configure system settings and user roles
+            </li>
+            <li class="flex items-center">
+              <i class="fas fa-check text-green-500 mr-2"></i>
+              Monitor supply chain operations
+            </li>
+          </ul>
+          <button 
+            (click)="navigateTo('sign-up')" 
+            class="w-full bg-gray-800 text-white py-2 px-4 rounded-lg hover:bg-gray-700 transition-colors duration-300">
+            Continue as a Student
+          </button>
+        </div>
+      </div>
+  
+      <!-- POS Operator Card -->
+      <div class="bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden">
+        <div class="p-6">
+          <div class="flex items-center mb-4">
+            <div class="p-2 bg-gray-100 rounded-lg">
+              <i class="fas fa-cash-register text-2xl text-gray-700"></i>
+            </div>
+            <h2 class="ml-3 text-xl font-semibold text-gray-800">Instructor</h2>
+          </div>
+          <p class="text-gray-600 mb-4">
+            Streamlined access to point-of-sale operations, inventory checking, and basic stock management
+          </p>
+          <ul class="space-y-2 mb-6 text-gray-600">
+            <li class="flex items-center">
+              <i class="fas fa-check text-green-500 mr-2"></i>
+              Process sales and transactions
+            </li>
+            <li class="flex items-center">
+              <i class="fas fa-check text-green-500 mr-2"></i>
+              Check real-time inventory levels
+            </li>
+            <li class="flex items-center">
+              <i class="fas fa-check text-green-500 mr-2"></i>
+              Handle basic stock operations
+            </li>
+            <li class="flex items-center">
+              <i class="fas fa-check text-green-500 mr-2"></i>
+              Generate daily sales reports
+            </li>
+          </ul>
+          <button 
+            (click)="navigateTo('sign-up')"
+            class="w-full bg-gray-800 text-white py-2 px-4 rounded-lg hover:bg-gray-700 transition-colors duration-300">
+            Continue as Instructor
+          </button>
+        </div>
+      </div>
+    </div>
+  
+   
+  </div>
+    

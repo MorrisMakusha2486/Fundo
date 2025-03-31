@@ -10,11 +10,22 @@ import { VideoOutputComponent } from './features/video-output/video-output.compo
 import { NotificationsComponent } from './features/notifications/notifications.component';
 import { WishlistComponent } from './features/wishlist/wishlist.component';
 import { CategoryCoursesComponent } from './features/courses/category-courses/category-courses.component';
+import { MyCoursesComponent } from './features/courses/my-courses/my-courses.component';
+import { MyLibraryComponent } from './features/courses/my-courses/my-library/my-library.component';
+import { BookmarkedComponent } from './features/courses/my-courses/bookmarked/bookmarked.component';
+import { MyScheduleComponent } from './features/courses/my-courses/my-schedule/my-schedule.component';
+import { GetStartedComponent } from './get-started/get-started.component';
+import { AchievementsComponent } from './features/achievements/achievements.component';
+import { UserAccountSettingsComponent } from './features/user-account-settings/user-account-settings.component';
 
 export const routes: Routes = [
   {
     path: '',
     component: LandingPageComponent
+  },
+  {
+    path: 'get-started',
+    component: GetStartedComponent
   },
   {
     path: 'login',
@@ -48,6 +59,34 @@ export const routes: Routes = [
       {
         path: 'notifications',
         component: NotificationsComponent
+      },
+      {
+        path: 'user-account-settings',
+        component: UserAccountSettingsComponent
+      },
+      {
+        path: 'achievements',
+        component: AchievementsComponent
+      },
+      {
+        path: 'my-courses',
+        component: MyCoursesComponent,
+      },
+      {
+        path: 'my-library',
+        component: MyLibraryComponent
+      },
+      {
+        path: 'bookmarked',
+        component: BookmarkedComponent 
+      },
+      {
+        path: 'wishlist',
+        component: WishlistComponent
+      },
+      {
+        path: 'my-schedule',
+        component: MyScheduleComponent
       },
       {
         path: 'wishlist',

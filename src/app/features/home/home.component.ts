@@ -265,6 +265,45 @@ exploreCategoryDetails(categoryId: number): void {
         { name: 'Deep Learning', count: 15, link: '/courses/deep-learning', imageUrl: 'https://source.unsplash.com/800x600/?deeplearning' },
         { name: 'Statistics', count: 10, link: '/courses/statistics', imageUrl: 'https://source.unsplash.com/800x600/?statistics' }
       ]
+    },
+    {
+      id: 4,
+      name: 'Physics',
+      icon: 'data_usage',
+      count: 90,
+      imageUrl: 'https://source.unsplash.com/800x600/?datascience',
+      subitems: [
+        { name: 'Python', count: 40, link: '/courses/python', imageUrl: 'https://source.unsplash.com/800x600/?python' },
+        { name: 'Machine Learning', count: 25, link: '/courses/ml', imageUrl: 'https://source.unsplash.com/800x600/?machinelearning' },
+        { name: 'Deep Learning', count: 15, link: '/courses/deep-learning', imageUrl: 'https://source.unsplash.com/800x600/?deeplearning' },
+        { name: 'Statistics', count: 10, link: '/courses/statistics', imageUrl: 'https://source.unsplash.com/800x600/?statistics' }
+      ]
+    },
+    {
+      id: 5,
+      name: 'Animation',
+      icon: 'data_usage',
+      count: 90,
+      imageUrl: 'https://source.unsplash.com/800x600/?datascience',
+      subitems: [
+        { name: 'Python', count: 40, link: '/courses/python', imageUrl: 'https://source.unsplash.com/800x600/?python' },
+        { name: 'Machine Learning', count: 25, link: '/courses/ml', imageUrl: 'https://source.unsplash.com/800x600/?machinelearning' },
+        { name: 'Deep Learning', count: 15, link: '/courses/deep-learning', imageUrl: 'https://source.unsplash.com/800x600/?deeplearning' },
+        { name: 'Statistics', count: 10, link: '/courses/statistics', imageUrl: 'https://source.unsplash.com/800x600/?statistics' }
+      ]
+    },
+    {
+      id: 6,
+      name: 'Mathmatics',
+      icon: 'data_usage',
+      count: 90,
+      imageUrl: 'https://source.unsplash.com/800x600/?datascience',
+      subitems: [
+        { name: 'Python', count: 40, link: '/courses/python', imageUrl: 'https://source.unsplash.com/800x600/?python' },
+        { name: 'Machine Learning', count: 25, link: '/courses/ml', imageUrl: 'https://source.unsplash.com/800x600/?machinelearning' },
+        { name: 'Deep Learning', count: 15, link: '/courses/deep-learning', imageUrl: 'https://source.unsplash.com/800x600/?deeplearning' },
+        { name: 'Statistics', count: 10, link: '/courses/statistics', imageUrl: 'https://source.unsplash.com/800x600/?statistics' }
+      ]
     }
   ];
 
