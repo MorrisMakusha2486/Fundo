@@ -1,9 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit, HostListener } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, NavigationEnd, Router, RouterModule } from '@angular/router';
-import { HomeComponent } from '../home/home.component';
-import { AdminDashboardComponent } from '../../admi/admin-dashboard/admin-dashboard.component';
 import { filter } from 'rxjs/operators';
 
 interface UserProfile {
@@ -228,12 +225,6 @@ export class DashbaordComponent implements OnInit{
 
   toggleSidebar(): void {
     this.isSidebarOpen = !this.isSidebarOpen;
-    // Save state to localStorage
-    localStorage.setItem('sidebarState', this.isSidebarOpen ? 'open' : 'closed');
-  }
-  toggleContentArea(): void {
-    this.isContentAreaOpen = !this.isContentAreaOpen;
-    // You could save this state to localStorage if needed
   }
 
   toggleMobileSearch(): void {
@@ -243,8 +234,6 @@ export class DashbaordComponent implements OnInit{
   search(): void {
     // Implement search functionality
     console.log('Searching for:', this.searchQuery);
-    // You could navigate to search results page with query params
-    // this.router.navigate(['/search'], { queryParams: { q: this.searchQuery } });
   }
 
   checkScreenSize(): void {
