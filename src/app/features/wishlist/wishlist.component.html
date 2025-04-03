@@ -1,6 +1,12 @@
-<div class="min-h-screen bg-gray-50 p-6">
-  <div class="max-w-6xl mx-auto">
-    <h1 class="text-2xl font-bold mb-6">My Wishlist</h1>
+<div class="min-h-screen bg-gray-50">
+  <!-- Header Section -->
+  <div class="bg-black h-[15vh] flex items-center shadow-sm">
+    <div class="container mx-auto px-6">
+      <h1 class="text-2xl md:text-3xl lg:text-4xl font-bold text-white">My Wishlist</h1>
+    </div>
+  </div>
+
+  <div class="max-w-6xl mx-auto p-6">
 
     @if (wishlistItems.length === 0) {
       <div class="bg-white rounded-lg shadow-md p-8 text-center">

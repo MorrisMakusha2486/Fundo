@@ -63,6 +63,9 @@ export class DashbaordComponent implements OnInit {
         '/dashboard/achievements/',
         '/dashboard/achievements',
         '/dashboard/user-account-settings',
+        '/dashboard/help-and-support',
+        '/dashboard/subscriptions',
+        '/dashboard/my-cart',
 
       ];
       
@@ -138,7 +141,10 @@ export class DashbaordComponent implements OnInit {
       'teach': '/dashboard/teach',
       'home': '/dashboard/home',
       'achievements': '/dashboard/achievements',
-      'user-account-settings': '/dashboard/user-account-settings'
+      'user-account-settings': '/dashboard/user-account-settings',
+      'my-cart': '/dashboard/my-cart',
+      'help-and-support': '/dashboard/help-and-support',
+      'subscriptions': '/dashboard/subscriptions',
     };
     
     if (routerViews[view]) {

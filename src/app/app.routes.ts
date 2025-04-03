@@ -17,6 +17,9 @@ import { MyScheduleComponent } from './features/courses/my-courses/my-schedule/m
 import { GetStartedComponent } from './get-started/get-started.component';
 import { AchievementsComponent } from './features/achievements/achievements.component';
 import { UserAccountSettingsComponent } from './features/user-account-settings/user-account-settings.component';
+import { HelpAndSupportComponent } from './features/help-and-support/help-and-support.component';
+import { SubscriptionsComponent } from './features/subscriptions/subscriptions.component';
+import { MyCartComponent } from './features/my-cart/my-cart.component';
 
 export const routes: Routes = [
   {
@@ -67,6 +70,22 @@ export const routes: Routes = [
       {
         path: 'achievements',
         component: AchievementsComponent
+      },
+      {
+        path: 'help-and-support',
+        component: HelpAndSupportComponent
+      },
+      {
+        path: 'my-cart',
+        component: MyCartComponent
+      },
+      {
+        path: 'subscriptions',
+        component: SubscriptionsComponent
+      },
+      {
+        path: '',
+        component: SubscriptionsComponent
       },
       {
         path: 'my-courses',

@@ -1,0 +1,71 @@
+.section-bg-pattern {
+    position: relative;
+  }
+  
+  .section-bg-pattern::before,
+  .section-bg-pattern::after {
+    content: '';
+    position: absolute;
+    pointer-events: none;
+  }
+  
+  /* Features Pattern */
+  .section-bg-pattern.features-pattern::before {
+    background: linear-gradient(45deg, rgba(59, 130, 246, 0.4) 0%, transparent 75%);
+    border-radius: 50%;
+    width: 580px;
+    height: 580px;
+    top: -100px;
+    right: -100px;
+  }
+  
+  .section-bg-pattern.features-pattern::after {
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.25) 0%, transparent 100%);
+    width: 400px;
+    height: 400px;
+    bottom: 50px;
+    left: 10%;
+  }
+  
+  /* How It Works Pattern */
+  .section-bg-pattern.works-pattern::before {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.35) 0%, transparent 100%);
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    transform: skewY(-12deg);
+  }
+  
+  .section-bg-pattern.works-pattern::after {
+    background: repeating-linear-gradient(
+      45deg,
+      rgba(59, 130, 246, 0.2),
+      rgba(59, 130, 246, 0.2) 4px,
+      transparent 4px,
+      transparent 20px
+    );
+    width: 500px;
+    height: 500px;
+    top: 20%;
+    right: 5%;
+    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+  }
+  
+  /* About Pattern */
+  .section-bg-pattern.about-pattern::before {
+    background: radial-gradient(circle at top right, rgba(59, 130, 246, 0.35), transparent 100%);
+    width: 100%;
+    height: 100%;
+    top: 0;
+    right: 0;
+  }
+  
+  .section-bg-pattern.about-pattern::after {
+    background: linear-gradient(45deg, rgba(59, 130, 246, 0.4), transparent);
+    width: 400px;
+    height: 400px;
+    bottom: 10%;
+    left: 5%;
+    border-radius: 30% 70% 50% 50% / 30% 30% 70% 70%;
+  }
