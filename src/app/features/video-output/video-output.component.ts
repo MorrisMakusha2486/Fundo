@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { PlayerComponent } from './player/player.component';
 
 interface Course {
   id: number;
@@ -45,12 +46,12 @@ interface Review {
 @Component({
   selector: 'app-video-output',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule,PlayerComponent],
   templateUrl: './video-output.component.html',
   styleUrl: './video-output.component.scss'
 })
 export class VideoOutputComponent implements OnInit {
-  @ViewChild('videoPlayer') videoPlayer!: ElementRef<HTMLVideoElement>;
+  @ViewChild('Player') videoPlayer!: ElementRef<HTMLVideoElement>;
 
   courseId: number | null = null;
   course: Course | null = null;
@@ -234,6 +235,47 @@ export class VideoOutputComponent implements OnInit {
       this.videoProgress = (video.currentTime / video.duration) * 100;
     }
   }
+
+  toggleExtended(): void {
+    this.isExtended = !this.isExtended;
+  }
+  adjustPlaybackSpeed(speed: number): void {
+    if (this.videoPlayer) {
+      this.videoPlayer.nativeElement.playbackRate = speed;
+    }
+  }
+  nextVideo(): void {
+    if (this.currentModuleIndex < this.sections[this.currentSectionIndex].modules.length - 1) {
+      this.currentModuleIndex++;
+      this.loadCurrentVideo();
+    } else if (this.currentSectionIndex < this.sections.length - 1) {
+      this.currentSectionIndex++;
+      this.currentModuleIndex = 0;
+      this.loadCurrentVideo();
+    }
+  }
+  adjustVolume(volume: number): void {
+    if (this.videoPlayer) {
+      this.videoPlayer.nativeElement.volume = volume;
+    }
+  }
+  toggleFullscreen(): void {
+    if (this.videoPlayer) {
+      this.videoPlayer.nativeElement.requestFullscreen();
+    }
+  }
+  adjustProgress(progress: number): void {
+    if (this.videoPlayer) {
+      const video = this.videoPlayer.nativeElement;
+      video.currentTime = (progress / 100) * video.duration;
+    }
+  }
+  adjustPlaybackRate(rate: number): void {
+    if (this.videoPlayer) {
+      this.videoPlayer.nativeElement.playbackRate = rate;
+    }
+  }
+  
 
   onVideoLoaded(): void {
     if (this.videoPlayer) {

@@ -1,6 +1,17 @@
 .video-player-container {
     aspect-ratio: 16/9;
   }
+
+  /* In app-player.component.css or app-player.component.scss */
+:host {
+  display: block; /* Ensure the component takes up the full width */
+}
+
+video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensure the video fills the container */
+}
   
   .video-controls {
     opacity: 0;

@@ -1,4 +1,4 @@
-<div class="min-h-screen bg-gray-50">
+<div class="min-h-screen bg-gray-50 ">
   <!-- Course Header -->
   <div class="bg-white shadow-sm">
     <div class="max-w-full  px-2  py-2 ">
@@ -62,38 +62,15 @@
 
   <!-- Main Content -->
   <div class="max-w-full mx-auto px-4 py-2 ">
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+    <div class="grid grid-cols-3 gap-4">
       <!-- Video Player Section -->
       <div class="lg:col-span-2" [class.lg:col-span-3]="isExtended">
-        <div class="bg-white rounded-lg shadow-sm overflow-hidden">
-          <div class="aspect-w-16 aspect-h-9 relative">
+        <div class="bg-white  shadow-sm ">
+          <div 
+          style="height: calc(50vh - 100px); min-height: 400px; max-height:550px;"
+            class=" relative ">
             <!-- Video Player -->
-            <div class="relative h-[450px]">
-              <video 
-                #videoPlayer
-                class="w-full h-full"
-                controls
-                [src]="currentVideoUrl"
-                (ended)="onVideoEnded()"
-                (timeupdate)="onTimeUpdate()"
-                (loadedmetadata)="onVideoLoaded()">
-                Your browser does not support the video tag.
-              </video>
-
-              <!-- Video Controls Overlay -->
-              <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-4">
-                <div class="flex items-center justify-between">
-                  <!-- Navigation Controls -->
-                  <div class="flex items-center space-x-2">
-                    <button (click)="previousVideo()" class="p-2 text-white hover:bg-white/10 rounded-full transition-colors">
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <app-player class="h-full" [videoUrl]="currentVideoUrl" id="main-player"></app-player>
           </div>
         </div>
 
@@ -378,16 +355,21 @@
                         [class.bg-gray-200]="module.id === selectedModuleId"
                         class="block text-sm text-gray-600 hover:bg-gray-50 py-3 px-4 rounded-md 
                                transition-all duration-200 flex items-center justify-between">
-                        <div class="flex items-center space-x-2">
+                        <div class="flex items-start">
                           <svg *ngIf="module.isCompleted" 
-                               class="h-4 w-4 text-green-500" fill="none" 
+                               class="h-4 w-4 text-green-500 mr-2 rounded border border-green-500" fill="none" 
                                viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" 
                                   stroke-width="2" d="M5 13l4 4L19 7" />
                           </svg>
-                          <span>{{ module.title }}</span>
+                          <div class="col">
+                            <span class="block">{{ module.title }}</span>
+                            <span class="text-xs text-gray-500">{{ module.duration }}</span>
+                          </div>
                         </div>
-                        <span class="text-xs text-gray-500">{{ module.duration }}</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500" viewBox="0 0 20 20" fill="currentColor">
+                          <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L8 9.586V3a1 1 0 012 0v6.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
                       </a>
                     </div>
                   </div>

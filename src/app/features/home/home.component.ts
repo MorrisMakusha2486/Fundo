@@ -304,7 +304,24 @@ exploreCategoryDetails(categoryId: number): void {
         { name: 'Deep Learning', count: 15, link: '/courses/deep-learning', imageUrl: 'https://source.unsplash.com/800x600/?deeplearning' },
         { name: 'Statistics', count: 10, link: '/courses/statistics', imageUrl: 'https://source.unsplash.com/800x600/?statistics' }
       ]
-    }
+    },
+    { id: 7, 
+      name: 'Photography', 
+      coursesCount: 55, 
+      popularTopics: 
+      ['Portrait', 'Landscape', 'Editing'] },
+    { id: 8,
+       name: 'Languages', 
+       coursesCount: 80, 
+       popularTopics: ['English', 'Spanish', 'French'] },
+    { id: 9, 
+      name: 'Data Science', 
+      coursesCount: 100, 
+      popularTopics: ['Machine Learning', 'Python', 'R'] },
+    { id: 10, 
+      name: 'Arts & Crafts', 
+      coursesCount: 45, 
+      popularTopics: ['Painting', 'Drawing', 'Sculpting'] }
   ];
 
   recommendedCourses: RecommendedCourse[] = [

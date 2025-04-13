@@ -1,14 +1,15 @@
+
 import { Component, Input, ElementRef, ViewChild, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-video-player',
+  selector: 'app-player',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './video-player.component.html',
-  styleUrls: ['./video-player.component.css']
+  templateUrl: './player.component.html',
+  styleUrls: ['./player.component.scss']
 })
-export class VideoPlayerComponent {
+export class PlayerComponent {
   @Input() videoUrl!: string;
   @Input() title?: string;
   @Input() autoplay: boolean = false;
@@ -60,5 +61,19 @@ export class VideoPlayerComponent {
     if (video.requestFullscreen) {
       video.requestFullscreen();
     }
+  }
+
+  previousVideo(): void {
+    // Implement previous video logic here
+    console.log('Previous video clicked');
+  }
+
+  adjustPlaybackSpeed(event: any): void {
+    this.videoPlayer.nativeElement.playbackRate = event.target.value;
+  }
+
+  nextVideo(): void {
+    // Implement next video logic here
+    console.log('Next video clicked');
   }
 }

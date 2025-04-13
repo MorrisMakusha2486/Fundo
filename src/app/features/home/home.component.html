@@ -5,17 +5,22 @@
       <!-- Existing main content -->
       <!-- Welcome Message -->
     <div class="bg-white shadow-md border-b border-gray-200 py-4 w-full">
-      <h1 class="text-3xl font-semibold text-gray-900 text-center">Welcome, {{ user?.name || 'Learner' }}!</h1>
+      <h1 class="text-3xl font-semibold text-gray-900 text-center">Welcome back, {{ user?.name || 'Learner' }}!</h1>
     </div>
 
-    <!-- Categories Section with Improved Borders -->
-<div class="p-2">
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
-    <div *ngFor="let category of categories" 
-         class="bg-white overflow-hidden shadow-lg rounded-lg flex flex-col items-center justify-center py-4 px-2 transition-all hover:shadow-xl relative cursor-pointer border border-gray-200"
-         (mouseenter)="showCategoryTooltip($event, category)" 
-         (mouseleave)="startHideCategoryTooltip()">
-        <h3 class="text-base font-medium text-gray-900 text-center">{{ category.name }}</h3>
+    <!-- Categories Section with Carousel -->
+<div class="p-2 bg-white rounded-lg shadow-md">
+  <div class="relative overflow-hidden">
+    <div class="flex overflow-x-auto space-x-4 py-2 px-4 hide-scrollbar ">
+      <div *ngFor="let category of categories"
+           class="flex-none flex items-center justify-between bg-gray-100 hover:bg-gray-200 rounded-full px-4 py-2 cursor-pointer transition-colors duration-200"
+           (mouseenter)="showCategoryTooltip($event, category)"
+           (mouseleave)="startHideCategoryTooltip()">
+        <span class="text-sm font-medium text-gray-700">{{ category.name }}</span>
+        <svg 
+          class="w-5 h-5 ml-2"
+          viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M7 10L12 15L17 10" stroke="#595959" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+      </div>
     </div>
   </div>
 </div>
@@ -48,7 +53,7 @@
   </svg>
 </button>
 </div>
-
+    
     <!-- Featured Slider -->
     <div class="relative w-full mb-6">
       <!-- Slider Header -->
@@ -57,7 +62,7 @@
       </div>
       
       <!-- Slider Container -->
-      <div class="relative overflow-hidden" style="height: calc(50vh - 150px); min-height: 350px; max-height:500px;">
+      <div class="relative overflow-hidden" style="height: calc(50vh - 100px); min-height: 400px; max-height:550px;">
         <div class="flex transition-transform duration-1000 ease-in-out h-full" 
              [style.transform]="'translateX(-' + currentSlide * 100 + '%)'">
           
@@ -117,7 +122,7 @@
     </div>
     
     <!-- Recommended Courses Section -->
-    <div class="w-full mb-8 overflow-hidden">
+    <div class="w-full mb-8 overflow-hidden course-section ">
       <h2 class="text-lg font-medium text-gray-900 mb-4 px-11">Recommended For You</h2>
       
       <!-- Recommended Courses Carousel -->
@@ -219,7 +224,7 @@
     </div>
     
     <!-- Continue Learning Section -->
-    <div class="w-full mb-8 overflow-hidden">
+    <div class="w-full mb-8 overflow-hidden course-section ">
       <h2 class="text-lg font-medium text-gray-900 mb-4 px-11">Continue Learning</h2>
       
       <!-- Continue Learning Carousel -->
@@ -295,7 +300,7 @@
     </div>
     
     <!-- Popular Courses Section -->
-    <div class="w-full mb-8 overflow-hidden">
+    <div class="w-full mb-8 overflow-hidden course-section ">
       <h2 class="text-lg font-medium text-gray-900 mb-4 px-11">Trending Now: Learn from the Best!</h2>
       
       <!-- Popular Courses Carousel -->
@@ -316,7 +321,7 @@
                [style.transform]="'translateX(-' + (currentPopularCoursesIndex * 272) + 'px)'">
             <!-- Popular Course Cards -->
             <div *ngFor="let course of popularCourses" class="flex-none w-64">
-              <div class="bg-white rounded-lg shadow-md overflow-hidden transition-all hover:shadow-lg">
+              <a [routerLink]="['/course-details', course.id]" class="bg-white rounded-lg shadow-md overflow-hidden transition-all hover:shadow-lg block">
                 <!-- Course Image with Trending Badge -->
                 <div class="relative">
                   <img 
@@ -363,7 +368,7 @@
                     </span>
                   </div>
                 </div>
-              </div>
+              </a>
             </div>
           </div>
         </div>
@@ -381,7 +386,7 @@
     </div>
     
     <!-- Short Courses Section -->
-    <div class="w-full mb-8 overflow-hidden">
+    <div class="w-full mb-8 overflow-hidden course-section ">
       <h2 class="text-lg font-medium text-gray-900 mb-4 px-11">Short Courses</h2>
       
       <!-- Short Courses Carousel -->
@@ -544,43 +549,6 @@
   </main>
   </div>
 
-<!-- Top Navigation Icons -->
-<div class="flex items-center space-x-4">
-  <!-- Notifications -->
-  <button class="relative p-2 text-gray-600 hover:text-gray-900">
-    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
-    </svg>
-    @if (getUnreadNotificationsCount() > 0) {
-      <span class="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">
-        {{ getUnreadNotificationsCount() }}
-      </span>
-    }
-  </button>
-
-  <!-- Shopping Cart -->
-  <button class="relative p-2 text-gray-600 hover:text-gray-900">
-    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
-    </svg>
-    @if (getCartItemsCount() > 0) {
-      <span class="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-blue-600 rounded-full">
-        {{ getCartItemsCount() }}
-      </span>
-    }
-  </button>
-
-  <!-- User Profile -->
-  <button class="relative p-2">
-    @if (user?.profileImage) {
-      <img [src]="user?.profileImage" alt="User" class="w-8 h-8 rounded-full object-cover">
-    } @else {
-      <div class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-sm font-medium">
-        {{ user?.initials }}
-      </div>
-    }
-  </button>
-</div>
 
 
 

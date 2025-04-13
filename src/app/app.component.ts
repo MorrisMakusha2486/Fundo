@@ -1,14 +1,13 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { LandingPageComponent } from "./landing-page/landing-page.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  imports: [RouterOutlet,
+  ],
+  template: `
+    <router-outlet></router-outlet>
+  ` 
 })
-export class AppComponent {
-  title = 'fundo-elearning';
-}
+export class AppComponent { }

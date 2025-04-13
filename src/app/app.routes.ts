@@ -1,3 +1,4 @@
+// filepath: /c:/Users/PC/Documents/projects/angular/fundo-elearning/src/app/app.routes.ts
 import { Routes } from '@angular/router';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { LoginComponent } from './login/login.component';
@@ -5,7 +6,6 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { DashbaordComponent } from './features/dashbaord/dashbaord.component';
 import { HomeComponent } from './features/home/home.component';
 import { AdminDashboardComponent } from './admi/admin-dashboard/admin-dashboard.component';
-import { VideoPlayerComponent } from './shared/components/video-palyer/video-player.component';
 import { VideoOutputComponent } from './features/video-output/video-output.component';
 import { NotificationsComponent } from './features/notifications/notifications.component';
 import { WishlistComponent } from './features/wishlist/wishlist.component';
@@ -20,6 +20,8 @@ import { UserAccountSettingsComponent } from './features/user-account-settings/u
 import { HelpAndSupportComponent } from './features/help-and-support/help-and-support.component';
 import { SubscriptionsComponent } from './features/subscriptions/subscriptions.component';
 import { MyCartComponent } from './features/my-cart/my-cart.component';
+import { PlayerComponent } from './features/video-output/player/player.component';
+import { CourseDetailsComponent } from './features/courses/course-details/course-details.component';
 
 export const routes: Routes = [
   {
@@ -112,8 +114,16 @@ export const routes: Routes = [
         component: WishlistComponent
       },
       {
+        path: 'player',
+        component: PlayerComponent
+      },
+      {
         path: 'course/:id',
         component: VideoOutputComponent
+      },
+      {
+        path: 'course-details/:id',
+        component: CourseDetailsComponent
       },
       {
         path: 'teach',
@@ -122,10 +132,9 @@ export const routes: Routes = [
     ]
   },
   {
-    path: 'video-player',
-    component: VideoPlayerComponent
+    path: 'courses/:id',
+    component: CourseDetailsComponent,
   },
-  // Redirect standalone routes to their dashboard equivalents
   {
     path: 'home',
     redirectTo: 'dashboard/home',
@@ -139,6 +148,11 @@ export const routes: Routes = [
   {
     path: 'course/:id',
     redirectTo: 'dashboard/course/:id',
+    pathMatch: 'prefix'
+  },
+  {
+    path: 'course-details/:id',
+    redirectTo: 'dashboard/course-details/:id',
     pathMatch: 'prefix'
   }
 ];

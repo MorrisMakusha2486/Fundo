@@ -1,0 +1,107 @@
+<div class="video-player-container relative bg-black rounded-lg overflow-hidden h-full w-full">
+    <video
+      #videoPlayer
+      [src]="videoUrl"
+      class="w-full"
+      (timeupdate)="onTimeUpdate()"
+      (ended)="onVideoEnded()"
+      [autoplay]="autoplay"
+    >
+      Your browser does not support the video tag.
+    </video>
+  
+    <div class="video-controls absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
+      <!-- Progress Bar -->
+      <input
+        type="range"
+      class="w-full h-1 bg-gray-300 rounded-lg appearance-none cursor-pointer"
+        [value]="(currentTime / duration) * 100"
+        (input)="seek($event)"
+      >
+  
+      <div class="flex items-center justify-between mt-2">
+        <!-- Play/Pause Button -->
+        <button 
+          (click)="isPlaying ? onPause() : onPlay()"
+          class="text-white hover:text-blue-500 transition-colors">
+          <svg *ngIf="!isPlaying" class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+          <svg *ngIf="isPlaying" class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+          </svg>
+        </button>
+  
+        <!-- Time Display -->
+        <div class="text-white text-sm">
+          {{currentTime | number:'1.0-0'}}s / {{duration | number:'1.0-0'}}s
+        </div>
+  
+        <!-- Volume Control -->
+        <div class="flex items-center">
+          <!-- Previous Button -->
+          <button
+            (click)="previousVideo()"
+            class="text-white hover:text-blue-500 transition-colors"
+            aria-label="Previous">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M7.707 5.293a1 1 0 010 1.414L3.414 10l4.293 4.293a1 1 0 01-1.414 1.414l-5-5a1 1 0 010-1.414l5-5a1 1 0 011.414 0z" clip-rule="evenodd" />
+            </svg>
+          </button>
+
+          <!-- Volume Control -->
+          <input
+            type="range"
+            class="w-20 h-1 bg-gray-300 rounded-lg appearance-none cursor-pointer mx-2"
+            [value]="volume"
+            min="0"
+            max="1"
+            step="0.1"
+            (input)="adjustVolume($event)"
+            aria-label="Volume"
+          >
+
+          <!-- Playback Speed Control -->
+          <select
+            class="bg-black text-white text-sm rounded-md focus:outline-none mx-2"
+            (change)="adjustPlaybackSpeed($event)"
+            aria-label="Playback Speed">
+            <option value="0.5">0.5x</option>
+            <option value="1" selected>1x</option>
+            <option value="1.5">1.5x</option>
+            <option value="2">2x</option>
+          </select>
+
+          <!-- Caption Toggle (Placeholder) -->
+          <button
+            class="text-white hover:text-blue-500 transition-colors mx-2"
+            aria-label="Toggle Captions">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M11.414 2.707a1 1 0 00-1.414 0l-4 4a1 1 0 001.414 1.414L10 5.414l3 3a1 1 0 001.414-1.414l-4-4zM8.586 17.293a1 1 0 001.414 0l4-4a1 1 0 00-1.414-1.414L10 14.586l-3-3a1 1 0 00-1.414 1.414l4 4z" />
+            </svg>
+          </button>
+
+          <!-- Fullscreen Toggle -->
+          <button
+            (click)="toggleFullscreen()"
+            class="text-white hover:text-blue-500 transition-colors"
+            aria-label="Toggle Fullscreen">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-5h-4m4 0v4m0 0l-5-5m-7 11h4m-4 0v4m0 0l5-5m5 5v-4m0 4h-4m0 0l5-5"/>
+            </svg>
+          </button>
+
+          <!-- Next Button -->
+          <button
+            (click)="nextVideo()"
+            class="text-white hover:text-blue-500 transition-colors"
+            aria-label="Next">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 010 1.414L16.586 10l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 010-1.414l-5-5a1 1 0 011.414 0z" clip-rule="evenodd" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+    
