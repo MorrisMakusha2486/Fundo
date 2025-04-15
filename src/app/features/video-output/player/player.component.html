@@ -10,25 +10,27 @@
       Your browser does not support the video tag.
     </video>
   
-    <div class="video-controls absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
+    <!-- Changed background to solid semi-transparent black -->
+    <div class="video-controls absolute bottom-0 left-0 right-0 bg-black/75 p-4"> 
       <!-- Progress Bar -->
       <input
         type="range"
-      class="w-full h-1 bg-gray-300 rounded-lg appearance-none cursor-pointer"
+        class="w-full h-1.5 bg-gray-300 rounded-lg appearance-none cursor-pointer accent-green-500" 
         [value]="(currentTime / duration) * 100"
-        (input)="seek($event)"
-      >
+        (input)="seek($event)"> <!-- Removed comment and ensured tag is closed -->
   
       <div class="flex items-center justify-between mt-2">
         <!-- Play/Pause Button -->
-        <button 
+        <button
           (click)="isPlaying ? onPause() : onPlay()"
-          class="text-white hover:text-blue-500 transition-colors">
-          <svg *ngIf="!isPlaying" class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M8 5v14l11-7z"/>
+          class="text-white hover:text-green-400 transition-colors">
+          <!-- Updated Play Icon -->
+          <svg *ngIf="!isPlaying" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" />
           </svg>
-          <svg *ngIf="isPlaying" class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+          <!-- Updated Pause Icon -->
+          <svg *ngIf="isPlaying" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 011-1h1a1 1 0 110 2H8a1 1 0 01-1-1zm4 0a1 1 0 011-1h1a1 1 0 110 2h-1a1 1 0 01-1-1z" clip-rule="evenodd" />
           </svg>
         </button>
   
@@ -37,29 +39,44 @@
           {{currentTime | number:'1.0-0'}}s / {{duration | number:'1.0-0'}}s
         </div>
   
-        <!-- Volume Control -->
-        <div class="flex items-center">
+        <!-- Volume Control Section -->
+        <div class="flex items-center space-x-2">
           <!-- Previous Button -->
           <button
             (click)="previousVideo()"
-            class="text-white hover:text-blue-500 transition-colors"
+            class="text-white hover:text-green-400 transition-colors"
             aria-label="Previous">
+            <!-- Updated Previous Icon -->
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-              <path fill-rule="evenodd" d="M7.707 5.293a1 1 0 010 1.414L3.414 10l4.293 4.293a1 1 0 01-1.414 1.414l-5-5a1 1 0 010-1.414l5-5a1 1 0 011.414 0z" clip-rule="evenodd" />
+              <path d="M8.447 13.947A1 1 0 017 13.053V6.947a1 1 0 011.447-.895l6 3.053a1 1 0 010 1.79l-6 3.053zM4 5a1 1 0 00-1 1v8a1 1 0 001 1h1a1 1 0 001-1V6a1 1 0 00-1-1H4z" />
             </svg>
           </button>
 
-          <!-- Volume Control -->
+          <!-- Volume Icon Button (Placeholder logic) -->
+           <button 
+             class="text-white hover:text-green-400 transition-colors" 
+             aria-label="Toggle Mute">
+             <!-- Placeholder Volume High Icon -->
+             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+               <path fill-rule="evenodd" d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.707.707L4.586 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.586l3.707-3.707a1 1 0 011.09-.217zM14.657 2.929a1 1 0 011.414 0A9.972 9.972 0 0119 10a9.972 9.972 0 01-2.929 7.071 1 1 0 01-1.414-1.414A7.971 7.971 0 0017 10c0-2.21-.894-4.208-2.343-5.657a1 1 0 010-1.414zm-2.829 2.828a1 1 0 011.415 0A5.983 5.983 0 0115 10a5.984 5.984 0 01-1.757 4.243 1 1 0 01-1.415-1.415A3.984 3.984 0 0013 10a3.983 3.983 0 00-1.172-2.828 1 1 0 010-1.414z" clip-rule="evenodd" />
+             </svg>
+             <!-- Placeholder Mute Icon (Example)
+             <svg *ngIf="isMuted" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+               <path fill-rule="evenodd" d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.707.707L4.586 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.586l3.707-3.707a1 1 0 011.09-.217zM12.293 7.293a1 1 0 011.414 0L15 8.586l1.293-1.293a1 1 0 111.414 1.414L16.414 10l1.293 1.293a1 1 0 01-1.414 1.414L15 11.414l-1.293 1.293a1 1 0 01-1.414-1.414L13.586 10l-1.293-1.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+             </svg> 
+             -->
+           </button>
+
+          <!-- Volume Slider -->
           <input
             type="range"
-            class="w-20 h-1 bg-gray-300 rounded-lg appearance-none cursor-pointer mx-2"
+            class="w-16 h-1.5 bg-gray-300 rounded-lg appearance-none cursor-pointer accent-green-500" 
             [value]="volume"
             min="0"
             max="1"
             step="0.1"
             (input)="adjustVolume($event)"
-            aria-label="Volume"
-          >
+            aria-label="Volume"> <!-- Removed comment and ensured tag is closed -->
 
           <!-- Playback Speed Control -->
           <select
@@ -72,36 +89,34 @@
             <option value="2">2x</option>
           </select>
 
-          <!-- Caption Toggle (Placeholder) -->
-          <button
-            class="text-white hover:text-blue-500 transition-colors mx-2"
-            aria-label="Toggle Captions">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-              <path d="M11.414 2.707a1 1 0 00-1.414 0l-4 4a1 1 0 001.414 1.414L10 5.414l3 3a1 1 0 001.414-1.414l-4-4zM8.586 17.293a1 1 0 001.414 0l4-4a1 1 0 00-1.414-1.414L10 14.586l-3-3a1 1 0 00-1.414 1.414l4 4z" />
-            </svg>
-          </button>
+          <!-- Removed Caption Toggle Button -->
 
           <!-- Fullscreen Toggle -->
           <button
             (click)="toggleFullscreen()"
-            class="text-white hover:text-blue-500 transition-colors"
+            class="text-white hover:text-green-400 transition-colors"
             aria-label="Toggle Fullscreen">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-5h-4m4 0v4m0 0l-5-5m-7 11h4m-4 0v4m0 0l5-5m5 5v-4m0 4h-4m0 0l5-5"/>
-            </svg>
-          </button>
+            <!-- Updated Fullscreen Icon -->
+             <svg *ngIf="!isFullscreen" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+               <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h4a1 1 0 010 2H5v3a1 1 0 11-2 0V4zm14 0a1 1 0 00-1-1h-4a1 1 0 100 2h3v3a1 1 0 102 0V4zm-1 12a1 1 0 01-1 1h-3v-2h4a1 1 0 011 1zM4 17a1 1 0 01-1-1v-3a1 1 0 112 0v3h3a1 1 0 110 2H4z" clip-rule="evenodd" />
+             </svg>
+             <!-- Updated Exit Fullscreen Icon -->
+             <svg *ngIf="isFullscreen" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+               <path fill-rule="evenodd" d="M5 16a1 1 0 01-1-1v-3a1 1 0 112 0v2h2a1 1 0 110 2H5zm11-1a1 1 0 00-1-1h-2v-2a1 1 0 10-2 0v3a1 1 0 001 1h3zm-1-11a1 1 0 01-1 1h-3v2h4a1 1 0 110-2zm-8 1a1 1 0 00-1 1v3a1 1 0 102 0V6h2a1 1 0 100-2H5z" clip-rule="evenodd" />
+             </svg>
+          </button> <!-- Ensured button tag is closed -->
 
           <!-- Next Button -->
           <button
             (click)="nextVideo()"
-            class="text-white hover:text-blue-500 transition-colors"
+            class="text-white hover:text-green-400 transition-colors"
             aria-label="Next">
+            <!-- Updated Next Icon -->
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-              <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 010 1.414L16.586 10l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 010-1.414l-5-5a1 1 0 011.414 0z" clip-rule="evenodd" />
+              <path d="M4.555 5.105A1 1 0 016 6.001v7.998a1 1 0 01-1.445.894L1.11 11.445a1 1 0 010-1.79l3.445-1.55zM16 5a1 1 0 00-1 1v8a1 1 0 001 1h1a1 1 0 001-1V6a1 1 0 00-1-1h-1z" />
             </svg>
-          </button>
+          </button> <!-- Ensured button tag is closed -->
         </div>
       </div>
     </div>
   </div>
-    

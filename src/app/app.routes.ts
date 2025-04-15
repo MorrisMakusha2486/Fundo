@@ -22,6 +22,9 @@ import { SubscriptionsComponent } from './features/subscriptions/subscriptions.c
 import { MyCartComponent } from './features/my-cart/my-cart.component';
 import { PlayerComponent } from './features/video-output/player/player.component';
 import { CourseDetailsComponent } from './features/courses/course-details/course-details.component';
+import { VideoOutputSheqigComponent } from './video-output-sheqig/video-output-sheqig.component';
+import { UserManagementSheqigComponent } from './user-management-sheqig/user-management-sheqig.component';
+import { UserListComponent } from './user-management-sheqig/user-list/user-list.component';
 
 export const routes: Routes = [
   {
@@ -85,9 +88,10 @@ export const routes: Routes = [
         path: 'subscriptions',
         component: SubscriptionsComponent
       },
+      
       {
-        path: '',
-        component: SubscriptionsComponent
+        path: 'user-list',
+        component: UserListComponent,
       },
       {
         path: 'my-courses',
@@ -98,16 +102,21 @@ export const routes: Routes = [
         component: MyLibraryComponent
       },
       {
+        path: 'user-management-sheqig',
+        component: UserManagementSheqigComponent
+      },
+      {
         path: 'bookmarked',
         component: BookmarkedComponent 
       },
-      {
-        path: 'wishlist',
-        component: WishlistComponent
-      },
+      
       {
         path: 'my-schedule',
         component: MyScheduleComponent
+      },
+      {
+        path: 'video-output-sheqig',
+        component: VideoOutputSheqigComponent
       },
       {
         path: 'wishlist',

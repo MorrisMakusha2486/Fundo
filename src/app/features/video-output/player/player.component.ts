@@ -22,6 +22,7 @@ export class PlayerComponent {
   currentTime: number = 0;
   duration: number = 0;
   volume: number = 1;
+  isFullscreen: boolean = false; // Added isFullscreen property
   
   onPlay(): void {
     this.isPlaying = true;
@@ -57,10 +58,33 @@ export class PlayerComponent {
   }
 
   toggleFullscreen(): void {
-    const video = this.videoPlayer.nativeElement;
-    if (video.requestFullscreen) {
-      video.requestFullscreen();
+    const elem = this.videoPlayer.nativeElement as any; // Use 'any' for broader compatibility
+    const doc = document as any; // Use 'any' for broader compatibility
+
+    if (!this.isFullscreen) {
+      if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+      } else if (elem.mozRequestFullScreen) { /* Firefox */
+        elem.mozRequestFullScreen();
+      } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+        elem.webkitRequestFullscreen();
+      } else if (elem.msRequestFullscreen) { /* IE/Edge */
+        elem.msRequestFullscreen();
+      }
+      this.isFullscreen = true;
+    } else {
+      if (doc.exitFullscreen) {
+        doc.exitFullscreen();
+      } else if (doc.mozCancelFullScreen) { /* Firefox */
+        doc.mozCancelFullScreen();
+      } else if (doc.webkitExitFullscreen) { /* Chrome, Safari and Opera */
+        doc.webkitExitFullscreen();
+      } else if (doc.msExitFullscreen) { /* IE/Edge */
+        doc.msExitFullscreen();
+      }
+      this.isFullscreen = false;
     }
+    // Consider adding event listeners for 'fullscreenchange' to update isFullscreen if user exits via ESC key
   }
 
   previousVideo(): void {

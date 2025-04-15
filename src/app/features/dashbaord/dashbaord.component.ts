@@ -55,6 +55,7 @@ export class DashbaordComponent implements OnInit {
         '/dashboard/notifications',
         '/dashboard/course/',
         '/dashboard/wishlist',
+        '/dashboard/video-output-sheqig',
         '/dashboard/my-library',
         '/dashboard/bookmarked',
         '/dashboard/my-schedule',
@@ -66,6 +67,9 @@ export class DashbaordComponent implements OnInit {
         '/dashboard/help-and-support',
         '/dashboard/subscriptions',
         '/dashboard/my-cart',
+        '/dashboard/user-management-sheqig',
+        '/dashboard/user-list',
+
 
       ];
       
@@ -138,6 +142,7 @@ export class DashbaordComponent implements OnInit {
       'my-courses': '/dashboard/my-courses',
       'notifications': '/dashboard/notifications',
       'wishlist': '/dashboard/wishlist',
+      'video-output-sheqig': '/dashboard/video-output-sheqig',
       'teach': '/dashboard/teach',
       'home': '/dashboard/home',
       'achievements': '/dashboard/achievements',
@@ -145,6 +150,8 @@ export class DashbaordComponent implements OnInit {
       'my-cart': '/dashboard/my-cart',
       'help-and-support': '/dashboard/help-and-support',
       'subscriptions': '/dashboard/subscriptions',
+      'user-management-sheqig': '/dashboard/user-management-sheqig',
+      'user-list': '/dashboard/user-list',
     };
     
     if (routerViews[view]) {
